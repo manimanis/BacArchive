@@ -10,6 +10,7 @@ use BacArchive\Labels;
 use BacArchive\SettingsManager;
 use BacArchive\ConfigManager;
 use BacArchive\FileProcessor;
+use BacArchive\ExamConfigManager;
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
@@ -36,6 +37,20 @@ try {
             $sm = new SettingsManager();
             $sm->save($input['settings'] ?? $input);
             echo json_encode(['success' => true]);
+            break;
+
+        // ── Configuration des examens (examconfig.ini) ────
+        case 'load-exam-config':
+            $ecm = new ExamConfigManager();
+            echo json_encode(['success' => true, 'data' => $ecm->load()]);
+            break;
+
+        case 'save-exam-config':
+            $input = json_decode(file_get_contents('php://input'), true);
+            $ecm = new ExamConfigManager();
+            $config = $input['config'] ?? $input;
+            $ok = $ecm->save($config);
+            echo json_encode(['success' => $ok, 'data' => $ecm->load()]);
             break;
 
         // ── USB Drives ──────────────────────────────────────

@@ -17,6 +17,7 @@
       </div>
       <div class="hdr-r">
         <button class="btn-daily" @click="handleDailyReport" title="Rapport journalier">📋 Rapport jour</button>
+        <button class="btn-cfg" @click="showExamConfig = true" title="Éditer la configuration des examens">📅 Examens</button>
         <button class="btn-cfg" @click="showParams = true">⚙ Paramètres</button>
       </div>
     </header>
@@ -25,6 +26,10 @@
     <ModalParams v-if="showParams" :settings="settings"
       @save="async (s) => { await saveSetting(s); showParams = false }"
       @close="showParams = false" />
+
+    <!-- Modal ExamConfig -->
+    <ModalExamConfig v-if="showExamConfig" :annee="settings.annee"
+      @close="showExamConfig = false" @saved="onExamConfigSaved" />
 
     <!-- Body -->
     <div class="body">
@@ -82,6 +87,7 @@ import { showToast } from './composables/useToast.js'
 import ModeRecup from './components/ModeRecup.vue'
 import ModeArchive from './components/ModeArchive.vue'
 import ModalParams from './components/ModalParams.vue'
+import ModalExamConfig from './components/ModalExamConfig.vue'
 import ToastManager from './components/ToastManager.vue'
 
 const MATIERE_SHORT = { 'STI': 'STI', 'AlgoProg': 'Algo & Prog', 'Info': 'Informatique' }
@@ -96,6 +102,7 @@ const settings = ref({
 })
 const mode = ref('recup')
 const showParams = ref(false)
+const showExamConfig = ref(false)
 const drives = ref([])
 const appReady = ref(false)
 const toastManager = ref(null)
@@ -185,4 +192,10 @@ const resetSession = () => {
   }
 }
 const updateArchiveState = (u) => { archiveState.value = { ...archiveState.value, ...u } }
+
+const onExamConfigSaved = (data) => {
+  // La configuration des examens a été enregistrée avec succès.
+  // On garde le modal ouvert pour permettre des corrections rapides.
+  console.log('Configuration des examens enregistrée :', data)
+}
 </script>

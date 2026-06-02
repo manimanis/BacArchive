@@ -7,14 +7,14 @@
         <span>Clé USB</span>
         <button class="btn-sm" @click="refreshAll" title="Rafraîchir tout">↺</button>
       </div>
-      <template v-if="drives.length === 0">
-        <p class="hint">Aucune clé amovible détectée.</p>
+      <template v-if="usbDrives.length === 0">
+        <p class="hint">Aucune clé USB détectée.</p>
       </template>
       <template v-else>
-        <div v-for="d in drives" :key="d.path"
+        <div v-for="d in usbDrives" :key="d.path"
           class="drive" :class="{ active: session.selDrive?.path === d.path }"
           @click="!copying && selectDrive(d)">
-          <span style="font-size:20px;flex-shrink:0">💾</span>
+          <span style="font-size:20px;flex-shrink:0">🔌</span>
           <div style="min-width:0;flex:1">
             <div class="drive-name">{{ d.name }}</div>
             <div class="drive-path">{{ d.path }}</div>
@@ -22,10 +22,35 @@
           </div>
         </div>
       </template>
+    </div>
 
-      <!-- Sous-dossier picker -->
-      <div v-if="session.selDrive && session.subfolders.length > 0 && !session.copyDone" class="subfolder-picker">
-        <div class="subfolder-picker-label">📂 Dossier source :</div>
+    <!-- Disques locaux -->
+    <div class="card">
+      <div class="card-hdr">
+        <span>Disque</span>
+      </div>
+      <template v-if="diskDrives.length === 0">
+        <p class="hint">Aucun disque local détecté.</p>
+      </template>
+      <template v-else>
+        <div v-for="d in diskDrives" :key="d.path"
+          class="drive" :class="{ active: session.selDrive?.path === d.path }"
+          @click="!copying && selectDrive(d)">
+          <span style="font-size:20px;flex-shrink:0">🖴</span>
+          <div style="min-width:0;flex:1">
+            <div class="drive-name">{{ d.name }}</div>
+            <div class="drive-path">{{ d.path }}</div>
+            <div v-if="d.size > 0" class="drive-path">{{ fmt(d.available) }} / {{ fmt(d.size) }}</div>
+          </div>
+        </div>
+      </template>
+    </div>
+
+    <!-- Sous-dossier picker -->
+    <div v-if="session.selDrive && session.subfolders.length > 0 && !session.copyDone" class="card">
+      <div class="card-hdr"><span>📂 Dossier source</span></div>
+      <div class="subfolder-picker">
+        <div class="subfolder-picker-label">Dossier :</div>
         <div class="subfolder-list">
           <div v-if="session.rootCount > 0"
             class="subfolder-item subfolder-root" :class="{ active: session.selSubfolder === '' }"
@@ -125,7 +150,7 @@
       <!-- Scan en cours -->
       <div v-if="scanning" class="scan-wait">
         <div class="scan-spinner"></div>
-        <p style="font-weight:600;color:#1a3a5c;margin:12px 0 4px;font-size:14px">Lecture de la clé USB</p>
+        <p style="font-weight:600;color:#1a3a5c;margin:12px 0 4px;font-size:14px">Lecture du lecteur</p>
         <p style="font-size:12px;color:#64748b;margin:0">Analyse des dossiers candidats en cours…</p>
       </div>
 
@@ -144,7 +169,7 @@
         <table class="tbl">
           <thead><tr>
             <th style="width:32px">#</th>
-            <th style="width:80px">N° Ins.</th>
+            <th style="width:80px">Nom Dossier</th>
             <th style="width:46px">Files</th>
             <th>Nombre de Fichiers / Type (top 6)</th>
             <th style="width:80px">Taille</th>
@@ -223,6 +248,16 @@ const currentDestPath = computed(() =>
   props.settings.destBase
     ? `${props.settings.destBase}\\Séance-${pad2(props.settings.seance)}\\Labo-${pad2(props.settings.labo)}`
     : ''
+)
+
+// Clés USB (type 2 = Removable Disk)
+const usbDrives = computed(() =>
+  (props.drives || []).filter(d => d.type === 2)
+)
+
+// Disques locaux (type 3 = Local Disk)
+const diskDrives = computed(() =>
+  (props.drives || []).filter(d => d.type === 3)
 )
 
 const statsItems = computed(() => {

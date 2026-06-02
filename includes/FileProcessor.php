@@ -9,6 +9,16 @@ namespace BacArchive;
 
 class FileProcessor
 {
+  public static array $driveType = [
+    0 => 'Unknown',
+    1 => 'No Root Directory',
+    2 => 'Removable Disk',
+    3 => 'Local Disk',
+    4 => 'Network Drive',
+    5 => 'Compact Disc',
+    6 => 'RAM Disk'
+  ];
+
   /**
    * Calculer le MD5 d'un fichier
    */
@@ -27,24 +37,27 @@ class FileProcessor
     if (PHP_OS_FAMILY === 'Windows') {
       // Essayer wmic d'abord
       $output = @shell_exec(
-        'wmic logicaldisk where DriveType=2 get DeviceID,VolumeName,Size,FreeSpace /format:csv 2>nul'
+        'wmic logicaldisk get DeviceID,DriveType,VolumeName,Size,FreeSpace /format:csv 2>nul'
       );
       if ($output) {
         foreach (explode("\n", $output) as $line) {
           $line = trim($line);
           if (empty($line)) continue;
           $parts = str_getcsv($line);
-          if (count($parts) < 5) continue;
+          if (count($parts) < 6) continue;
           $deviceID = $parts[1] ?? '';
-          $free     = (int)($parts[2] ?? 0);
-          $size     = (int)($parts[3] ?? 0);
-          $volName  = trim($parts[4] ?? '');
+          $deviceType = self::$driveType[(int)$parts[2]] ?? '';
+          $free     = (int)$parts[3] ?? 0;
+          $size     = (int)$parts[4] ?? 0;
+          $volName  = trim($parts[5] ?? '');
           if (!str_contains($deviceID, ':')) continue;
           $drivePath = $deviceID . '\\';
           if (is_dir($drivePath)) {
             $drives[] = [
               'path'      => $drivePath,
-              'name'      => $volName ? "$deviceID — $volName" : $deviceID,
+              'type'      => (int)$parts[2],
+              'libType'      => $deviceType,
+              'name'      => $deviceID,
               'size'      => $size,
               'available' => $free,
             ];
@@ -59,6 +72,8 @@ class FileProcessor
           if (is_dir($dp)) {
             $drives[] = [
               'path'      => $dp,
+              'type'      => 3,
+              'libType'   => self::$driveType[3],
               'name'      => "$letter:",
               'size'      => 0,
               'available' => 0,
@@ -66,35 +81,7 @@ class FileProcessor
           }
         }
       }
-    } elseif (PHP_OS_FAMILY === 'Darwin') {
-      if (is_dir('/Volumes')) {
-        foreach (scandir('/Volumes') as $d) {
-          if ($d === '.' || $d === '..') continue;
-          if ($d === 'Macintosh HD') continue;
-          $p = '/Volumes/' . $d;
-          if (is_dir($p)) {
-            $drives[] = ['path' => $p, 'name' => $d, 'size' => 0, 'available' => 0];
-          }
-        }
-      }
-    } else {
-      foreach (['/media', '/run/media'] as $base) {
-        if (!is_dir($base)) continue;
-        foreach (scandir($base) as $user) {
-          if ($user === '.' || $user === '..') continue;
-          $userPath = $base . '/' . $user;
-          if (!is_dir($userPath)) continue;
-          foreach (scandir($userPath) as $d) {
-            if ($d === '.' || $d === '..') continue;
-            $p = $userPath . '/' . $d;
-            if (is_dir($p)) {
-              $drives[] = ['path' => $p, 'name' => $d, 'size' => 0, 'available' => 0];
-            }
-          }
-        }
-      }
     }
-
     return $drives;
   }
 

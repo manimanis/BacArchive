@@ -107,7 +107,7 @@
           <table class="tbl">
             <thead><tr>
               <th style="width:32px">#</th>
-              <th style="width:88px;cursor:pointer" @click="toggleSort('num')">N° Ins.{{ sortIcon('num') }}</th>
+              <th style="width:88px;cursor:pointer" @click="toggleSort('num')">Nom Dossier{{ sortIcon('num') }}</th>
               <th style="width:50px;cursor:pointer" @click="toggleSort('files')">Files{{ sortIcon('files') }}</th>
               <th>Type / Nombre de Fichiers (top 6)</th>
               <th style="width:80px;cursor:pointer" @click="toggleSort('size')">Taille{{ sortIcon('size') }}</th>

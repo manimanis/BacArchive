@@ -17,7 +17,6 @@ yarn-error.log*
 *.log
 
 # ── Données de l'application en développement ────────────────────────────────
-*.ini
 app-data/
 
 # ── Système d'exploitation ───────────────────────────────────────────────────

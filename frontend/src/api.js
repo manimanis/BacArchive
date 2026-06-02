@@ -22,6 +22,10 @@ async function request(action, data = null, method = 'POST') {
 export const loadSettings = () => request('load-settings', null, 'GET')
 export const saveSettings = (settings) => request('save-settings', { settings })
 
+// ── Configuration des examens (examconfig.ini) ──────
+export const loadExamConfig = () => request('load-exam-config', null, 'GET')
+export const saveExamConfig = (config) => request('save-exam-config', { config })
+
 // ── USB Drives ──────────────────────────────────────────────
 export const listDrives = () => request('list-drives', null, 'GET')
 export const listDriveSubfolders = (path) => request('list-drive-subfolders', { path })
