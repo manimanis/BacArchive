@@ -69,6 +69,7 @@ class FileProcessor
     } elseif (PHP_OS_FAMILY === 'Darwin') {
       if (is_dir('/Volumes')) {
         foreach (scandir('/Volumes') as $d) {
+          if ($d === '.' || $d === '..') continue;
           if ($d === 'Macintosh HD') continue;
           $p = '/Volumes/' . $d;
           if (is_dir($p)) {
@@ -80,9 +81,11 @@ class FileProcessor
       foreach (['/media', '/run/media'] as $base) {
         if (!is_dir($base)) continue;
         foreach (scandir($base) as $user) {
+          if ($user === '.' || $user === '..') continue;
           $userPath = $base . '/' . $user;
           if (!is_dir($userPath)) continue;
           foreach (scandir($userPath) as $d) {
+            if ($d === '.' || $d === '..') continue;
             $p = $userPath . '/' . $d;
             if (is_dir($p)) {
               $drives[] = ['path' => $p, 'name' => $d, 'size' => 0, 'available' => 0];
@@ -186,6 +189,7 @@ class FileProcessor
     if ($items === false) return;
 
     foreach ($items as $item) {
+      if ($item === '.' || $item === '..') continue;
       if (strtolower($item) === '_usbwatcher') continue;
       $path = $dir . DIRECTORY_SEPARATOR . $item;
       if (is_dir($path)) {
@@ -445,6 +449,7 @@ class FileProcessor
       $entries = @scandir($dir);
       if ($entries === false) return false;
       foreach ($entries as $e) {
+        if ($e === '.' || $e === '..') continue;
         if (!preg_match($CAND_RE, $e)) continue;
         if (is_dir($dir . DIRECTORY_SEPARATOR . $e)) return true;
       }
@@ -456,6 +461,7 @@ class FileProcessor
       $entries = @scandir($dir);
       if ($entries === false) return 0;
       foreach ($entries as $e) {
+        if ($e === '.' || $e === '..') continue;
         if (!preg_match($CAND_RE, $e)) continue;
         if (is_dir($dir . DIRECTORY_SEPARATOR . $e)) $count++;
       }
