@@ -113,4 +113,4 @@ extension=mbstring
 
 ## 📜 Licence
 
-GPL-3.0 © 2026 La Communauté Tunisienne des Enseignants d'Informatique
+GPL-3.0 © 2026 ManiSoft
