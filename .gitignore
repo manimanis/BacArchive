@@ -1,0 +1,38 @@
+# ── Dépendances ──────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Build & distribution ─────────────────────────────────────────────────────
+dist/
+build/
+out/
+
+# ── Bundle webpack (régénéré par npm run build) ──────────────────────────────
+public/bundle.js
+public/bundle.js.map
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# ── Données de l'application en développement ────────────────────────────────
+*.ini
+app-data/
+
+# ── Système d'exploitation ───────────────────────────────────────────────────
+Thumbs.db
+desktop.ini
+
+# ── Éditeurs ─────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*~
+
+# ── Scripts de dev ───────────────────────────────────────────────────────────
+REBUILD.bat
+REBUILD_INFO.md
+start.bat
+start.sh
+TODO.txt
+___commands.txt

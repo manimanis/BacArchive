@@ -1,0 +1,34 @@
+RewriteEngine On
+
+# Configuration des types MIME pour les modules JS
+<IfModule mod_mime.c>
+    AddType application/javascript .js
+    AddType application/javascript .mjs
+    AddType text/css .css
+    AddType image/svg+xml .svg
+    AddType application/json .json
+</IfModule>
+
+# 1. Servir les assets du frontend Vue.js (dist/assets/*)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^assets/(.*)$ dist/assets/$1 [L]
+
+# 2. Servir le favicon
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^favicon\.(ico|svg)$ assets/$0 [L]
+
+# 3. Routes API (action=*)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+# 4. Servir index.html (SPA)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index\.html$ dist/index.html [L]
+
+# 5. Tout le reste -> index.php racine (qui sert dist/index.html)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]

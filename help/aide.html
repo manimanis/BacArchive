@@ -1,0 +1,1189 @@
+`�<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BacArchive — Aide</title>
+<style>
+/* ── Variables ── */
+:root {
+  --navy:#1A3A5C; --navy-d:#0D2240; --blue:#2980B9; --blue-l:#EBF3FA; --blue-m:#D6E8F5;
+  --green:#27AE60; --orange:#E67E22; --red:#E74C3C;
+  --gray-700:#334155; --gray-500:#64748B; --gray-300:#CBD5E1; --gray-100:#F1F5F9; --gray-50:#F8FAFC;
+  --white:#FFFFFF; --sidebar-w:240px; --hdr-h:52px; --radius:8px;
+  --shadow:0 2px 12px rgba(26,58,92,.10);
+  --font-sans:'Segoe UI','Helvetica Neue',Arial,'Liberation Sans',sans-serif;
+  --font-mono:Consolas,'Courier New','Liberation Mono',monospace;
+  --font-serif:Georgia,'Times New Roman',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px;scroll-behavior:smooth}
+body{font-family:var(--font-sans);color:var(--gray-700);background:var(--gray-50);display:flex;min-height:100vh}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:var(--font-mono);font-size:.85em;background:var(--gray-100);padding:1px 5px;border-radius:3px;color:#2C3E50}
+kbd{display:inline-block;padding:1px 7px;background:var(--gray-100);border:1px solid var(--gray-300);border-bottom:3px solid var(--gray-300);border-radius:4px;font-family:var(--font-mono);font-size:.78rem;font-weight:600;color:var(--navy);white-space:nowrap}
+
+/* ── Sidebar ── */
+.sidebar{width:var(--sidebar-w);min-height:100vh;background:var(--navy-d);color:var(--white);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;overflow-y:auto}
+.sidebar-brand{padding:18px 16px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-brand h1{font-size:.95rem;font-weight:700;color:var(--white)}
+.sidebar-brand .ver{font-size:.68rem;color:rgba(255,255,255,.4);font-family:var(--font-mono);margin-top:2px}
+.nav-group{padding:14px 0 4px}
+.nav-group-label{font-size:.6rem;font-weight:700;letter-spacing:1.3px;text-transform:uppercase;color:rgba(255,255,255,.3);padding:0 16px 5px}
+.sidebar nav a{display:flex;align-items:center;gap:9px;padding:7px 16px;text-decoration:none;color:rgba(255,255,255,.65);font-size:.82rem;border-left:3px solid transparent;transition:all .15s}
+.sidebar nav a:hover{background:rgba(255,255,255,.07);color:var(--white);border-left-color:rgba(255,255,255,.25)}
+.sidebar nav a.active{background:rgba(41,128,185,.22);color:var(--white);border-left-color:var(--blue);font-weight:500}
+.sidebar nav a .ni{font-size:.9rem;width:16px;text-align:center;flex-shrink:0}
+.sidebar-footer{margin-top:auto;padding:14px 16px;border-top:1px solid rgba(255,255,255,.06);font-size:.68rem;color:rgba(255,255,255,.28);line-height:1.7}
+
+/* ── Main ── */
+.main{margin-left:var(--sidebar-w);flex:1;min-width:0}
+.topbar{position:sticky;top:0;z-index:90;height:var(--hdr-h);background:rgba(248,250,252,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--gray-300);display:flex;align-items:center;padding:0 36px}
+.topbar-title{font-size:1.05rem;font-weight:700;color:var(--navy)}
+.topbar-badge{background:var(--blue);color:var(--white);font-size:.62rem;font-weight:600;padding:2px 7px;border-radius:20px;font-family:var(--font-mono);margin-left:8px}
+.content{padding:36px 48px 80px;max-width:880px}
+
+/* ── Sections ── */
+.section{margin-bottom:60px}
+.section-anchor{position:relative;top:-72px}
+.eyebrow{font-size:.68rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--blue);margin-bottom:6px;font-family:var(--font-mono)}
+.section-title{font-family:var(--font-serif);font-size:1.65rem;font-weight:900;color:var(--navy);line-height:1.2;margin-bottom:12px}
+.section-lead{font-size:.95rem;color:var(--gray-500);line-height:1.7;margin-bottom:24px}
+.divider{border:none;border-top:1px solid var(--gray-300);margin:36px 0}
+.sub{margin-bottom:28px}
+.sub-title{font-size:.9rem;font-weight:600;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sub-title::after{content:'';flex:1;height:1px;background:var(--gray-300)}
+
+/* ── Quick start banner ── */
+.qs-banner{background:linear-gradient(135deg,var(--navy-d) 0%,var(--navy) 100%);border-radius:var(--radius);padding:28px 32px;margin-bottom:40px;color:var(--white)}
+.qs-banner h2{font-family:var(--font-serif);font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.qs-banner .sub-txt{font-size:.88rem;color:rgba(255,255,255,.65);margin-bottom:20px}
+.qs-steps{display:flex;gap:0;counter-reset:qs}
+.qs-step{flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;position:relative}
+.qs-step::after{content:'→';position:absolute;right:-8px;top:14px;font-size:1.1rem;color:rgba(255,255,255,.3)}
+.qs-step:last-child::after{display:none}
+.qs-num{width:32px;height:32px;border-radius:50%;background:var(--blue);color:white;font-size:.82rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-family:var(--font-mono)}
+.qs-step-title{font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:3px}
+.qs-step-desc{font-size:.75rem;color:rgba(255,255,255,.55);line-height:1.4}
+
+/* ── Callouts ── */
+.callout{display:flex;gap:12px;padding:13px 16px;border-radius:var(--radius);margin:14px 0;font-size:.86rem;line-height:1.65}
+.ci{font-size:1.05rem;flex-shrink:0;margin-top:1px}
+.callout.info{background:var(--blue-l);border-left:3px solid var(--blue);color:#0D2240}
+.callout.warn{background:#FFF8F0;border-left:3px solid var(--orange);color:#6B3811}
+.callout.danger{background:#FFF1F1;border-left:3px solid var(--red);color:#7A1D1D}
+.callout.tip{background:#F0FDF4;border-left:3px solid var(--green);color:#1A4731}
+.callout strong{font-weight:600}
+
+/* ── Tables ── */
+.tbl{width:100%;border-collapse:collapse;font-size:.84rem;border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.06);margin:14px 0}
+.tbl th{background:var(--navy);color:var(--white);padding:9px 13px;text-align:left;font-size:.76rem;font-weight:600;letter-spacing:.3px}
+.tbl td{padding:8px 13px;border-bottom:1px solid var(--gray-100);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:nth-child(even) td{background:var(--gray-50)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;font-size:.72rem;font-weight:600}
+.b-green{background:#E8F8F0;color:#166534}
+.b-orange{background:#FEF3E8;color:#9A3412}
+.b-red{background:#FEE2E2;color:#991B1B}
+.b-gray{background:var(--gray-100);color:var(--gray-500)}
+.b-req{background:#E74C3C;color:white;font-size:.65rem;padding:1px 6px;border-radius:10px}
+
+/* ── Steps ── */
+.steps{display:flex;flex-direction:column;gap:12px;margin:16px 0}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step-n{width:28px;height:28px;border-radius:50%;background:var(--navy);color:white;font-size:.76rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-family:var(--font-mono)}
+.step-b{flex:1}
+.step-t{font-weight:600;color:var(--navy);margin-bottom:3px;font-size:.9rem}
+.step-d{font-size:.83rem;color:var(--gray-500);line-height:1.6}
+
+/* ── Two col ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+
+/* ── Shortcut grid ── */
+.sc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0}
+.sc-item{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--white);border:1px solid var(--gray-300);border-radius:6px;font-size:.82rem}
+.sc-desc{color:var(--gray-500);flex:1}
+
+/* ── Status table special ── */
+.status-icon{font-size:1rem;display:inline-block;width:20px}
+
+/* ── Scroll top ── */
+#scroll-top{position:fixed;bottom:24px;right:24px;width:36px;height:36px;border-radius:50%;background:var(--navy);color:white;border:none;cursor:pointer;font-size:1rem;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;z-index:200}
+#scroll-top.visible{opacity:1}
+
+/* ── Search bar ── */
+#search-bar{position:fixed;top:0;left:var(--sidebar-w);right:0;z-index:200;background:#fffde7;border-bottom:2px solid #f59e0b;padding:7px 20px;display:none;align-items:center;gap:10px;font-family:var(--font-sans);font-size:13px;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+#search-bar.visible{display:flex}
+#search-input{flex:1;border:1px solid #d97706;border-radius:5px;padding:4px 10px;font-size:13px;font-family:var(--font-sans);outline:none;background:white;max-width:380px}
+#search-input:focus{border-color:#b45309;box-shadow:0 0 0 2px rgba(245,158,11,.2)}
+#search-count{font-size:12px;color:#92400e;font-weight:600;min-width:80px}
+mark.search-match{background:#fef08a;border-radius:2px}
+mark.search-match.current{background:#f59e0b;color:white;border-radius:2px}
+#search-close{background:none;border:none;cursor:pointer;font-size:15px;color:#92400e;padding:2px 6px;border-radius:4px;line-height:1}
+#search-close:hover{background:rgba(245,158,11,.2)}
+.search-nav{background:none;border:1px solid #d97706;border-radius:4px;cursor:pointer;padding:2px 7px;color:#92400e;font-size:12px}
+.search-nav:hover{background:#fef3c7}
+body.search-open .main{padding-top:42px}
+
+/* ── Simulated app UI ── */
+.sim-frame{border-radius:var(--radius);overflow:hidden;box-shadow:0 8px 32px rgba(26,58,92,.14);border:1px solid var(--gray-300);margin:16px 0 24px;font-family:var(--font-sans);font-size:12px}
+.sim-caption{padding:8px 14px;font-size:.76rem;color:var(--gray-500);background:var(--gray-50);border-top:1px solid var(--gray-300);font-style:italic}
+.sim-topbar{background:#1A3A5C;color:white;display:flex;align-items:center;padding:0 14px;height:42px;gap:10px}
+.sim-brand{font-weight:700;font-size:12px}
+.sim-sep{color:rgba(255,255,255,.3)}
+.sim-meta{font-size:10px;color:rgba(255,255,255,.65)}
+.sim-dot{color:#1ABC9C;margin:0 2px}
+.sim-topbar-right{margin-left:auto;display:flex;gap:6px}
+.sim-btn-params{background:transparent;color:rgba(255,255,255,.75);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:4px 10px;font-size:11px;cursor:default}
+.sim-tabs{display:flex;background:#F4F6F9;border-bottom:1px solid #D0DCE8}
+.sim-tab{padding:8px 16px;font-size:12px;font-weight:500;color:#64748B;cursor:default;border-bottom:2px solid transparent}
+.sim-tab.active{color:#FFFFFF;font-weight:700;border-bottom-color:#1A3A5B;background:#1A3A5B}
+.sim-body{display:flex;min-height:300px}
+.sim-sb{width:190px;background:#F4F6F9;padding:10px 0;border-right:1px solid #D0DCE8;flex-shrink:0;display:flex;flex-direction:column}
+.sim-sb-lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#94A3B8;padding:10px 12px 3px}
+.sim-drive{background:#E8F0F8;border:1px solid #B8D0E8;border-radius:5px;margin:3px 8px;padding:7px 9px}
+.sim-drive-row{font-weight:700;font-size:11px;color:#1A3A5C;display:flex;align-items:center;justify-content:space-between}
+.sim-drive-sub{font-size:9px;color:#64748B;margin-top:1px}
+.sim-folder-btn{font-size:12px;opacity:.6;cursor:pointer;padding:1px 3px;border-radius:3px;border:1px solid rgba(26,58,92,.2)}
+.sim-folder-btn:hover{opacity:1;background:#2980B9;color:white;border-color:#2980B9}
+.sim-sel{margin:2px 8px;background:white;border:1px solid #CBD5E1;border-radius:4px;padding:4px 9px;color:#1A3A5C;font-size:11px;display:flex;justify-content:space-between}
+.sim-path{margin:6px 8px;font-size:9px;font-family:var(--font-mono);color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:6px;line-height:1.5}
+.sim-copy-btn{margin:8px 8px 4px;background:linear-gradient(135deg,#1A3A5C,#2980B9);color:white;border:none;border-radius:5px;padding:8px 12px;font-size:11px;font-weight:700;cursor:default;display:flex;align-items:center;gap:5px;justify-content:center}
+.sim-content{flex:1;background:#F8FAFC;overflow:hidden}
+.sim-stats{display:flex;gap:8px;padding:10px 12px;background:white;border-bottom:1px solid #E2E8F0}
+.sim-stat{border-radius:7px;padding:6px 14px;text-align:center;border:1.5px solid}
+.sim-stat-v{font-size:16px;font-weight:800;line-height:1}
+.sim-stat-l{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+.sim-stat.g{background:#F0FDF4;border-color:#86EFAC;color:#166534}
+.sim-stat.b{background:#EBF3FA;border-color:#93C5FD;color:#1A3A5C}
+.sim-stat.o{background:#FEF3C7;border-color:#FDE68A;color:#92400E}
+.sim-stat.r{background:#FEE2E2;border-color:#FCA5A5;color:#991B1B}
+.sim-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.sim-tbl th{background:#1A3A5C;color:white;padding:6px 9px;text-align:left;font-size:10px;font-weight:600}
+.sim-tbl td{padding:5px 9px;border-bottom:1px solid #F1F5F9;color:#334155}
+.sim-tbl tr:nth-child(even) td{background:#F8FAFC}
+.sim-tbl tr.absent td{color:#94A3B8;font-style:italic}
+.sim-tbl .abs{color:#E67E22;font-weight:600}
+.sim-tbl tr.nc td{color:#E74C3C;font-weight:600}
+.sim-ext{color:#64748B}
+.sim-dest{background:#1A3A5C;color:rgba(255,255,255,.7);padding:4px 14px;font-size:9px;font-family:var(--font-mono);display:flex;align-items:center;gap:5px}
+.sim-dest .dl{color:rgba(255,255,255,.4);font-size:8px}
+.sim-toast{background:#FEE2E2;border-left:3px solid #E74C3C;margin:8px 12px 4px;border-radius:5px;padding:8px 12px;font-size:10px;color:#991B1B;display:flex;gap:7px;align-items:flex-start}
+.sim-arch-sb{width:200px;background:#F4F6F9;flex-shrink:0;display:flex;flex-direction:column;border-right:1px solid #D0DCE8}
+.sim-arch-hdr{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid #D0DCE8;font-size:11px;font-weight:700;color:#1A3A5C}
+.acc-item{border-bottom:1px solid #E2E8F0}
+.acc-row{display:flex;align-items:center;padding:7px 12px;gap:5px;color:#1A3A5C}
+.acc-row.sel{background:#D6E8F5}
+.acc-arr{font-size:8px;color:#94A3B8;width:9px}
+.acc-nm{font-size:11px;font-weight:600;flex:1}
+.acc-ct{font-size:10px;font-weight:700;color:#27AE60}
+.acc-tot{font-size:9px;color:#94A3B8}
+.acc-warn{font-size:9px;color:#E74C3C;font-weight:700}
+.acc-labos{background:#EAEFF6;padding:2px 0 3px 20px}
+.acc-labo{display:flex;align-items:center;padding:4px 8px;gap:5px;border-radius:4px;margin:1px 4px 1px 0}
+.acc-labo.sel{background:#2980B9}
+.acc-labo-nm{font-size:10px;font-weight:600}
+.acc-labo-nm.s{color:white}
+.acc-labo-nm.n{color:#334155}
+.acc-bar{width:30px;height:2px;background:#CBD5E1;border-radius:1px;overflow:hidden}
+.acc-bar-f{height:100%;border-radius:1px}
+.acc-doc{font-size:8px;font-weight:700;padding:0 3px;border-radius:2px}
+.acc-doc-p{background:rgba(192,57,43,.2);color:#c0392b}
+.acc-doc-x{background:rgba(39,174,96,.2);color:#27ae60}
+.acc-lc{font-size:9px;font-weight:700;color:#27AE60}
+.acc-lc.s{color:rgba(255,255,255,.85)}
+.acc-sb-ft{padding:6px 12px;border-top:1px solid #D0DCE8;font-size:9px;color:#64748B;margin-top:auto}
+.sim-arch-content{flex:1;background:#F8FAFC;display:flex;flex-direction:column}
+.sim-breadcrumb{display:flex;align-items:center;gap:5px;padding:8px 14px;background:white;border-bottom:1px solid #E2E8F0;font-size:10px;color:#64748B}
+.sim-bc-link{color:#2980B9}
+.sim-bc-sep{color:#CBD5E1}
+.sim-bc-cur{font-weight:600;color:#1A3A5C}
+.sim-actions{display:flex;gap:6px;padding:10px 12px;background:white;border-bottom:1px solid #E2E8F0}
+.sim-act-btn{border:none;border-radius:5px;padding:5px 11px;font-size:10px;font-weight:600;cursor:default;display:flex;align-items:center;gap:4px}
+.sim-act-btn.fold{background:#F59E0B;color:white}
+.sim-act-btn.pdf{background:#E74C3C;color:white}
+.sim-act-btn.xls{background:#27AE60;color:white}
+.sim-regen{background:#F1F5F9;border:1px solid #CBD5E1;border-radius:4px;padding:4px 7px;font-size:10px;cursor:default;color:#64748B}
+.sim-modal-ov{background:rgba(13,34,64,.5);display:flex;align-items:center;justify-content:center;padding:20px;border-radius:var(--radius);overflow:hidden}
+.sim-modal{background:white;border-radius:8px;width:360px;box-shadow:0 16px 48px rgba(0,0,0,.25);overflow:hidden;font-size:12px}
+.sim-modal-hdr{background:#1A3A5C;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:13px}
+.sim-modal-hdr .x{color:rgba(255,255,255,.5);font-weight:300;font-size:15px}
+.sim-modal-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.sim-fg{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:10px 12px}
+.sim-fg-lbl{font-size:10px;font-weight:600;color:#64748B;margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.sim-fg-row{display:flex;gap:5px;align-items:center}
+.sim-fg-input{flex:1;border:1px solid #CBD5E1;border-radius:4px;padding:5px 9px;font-size:11px;color:#1A3A5C;background:white}
+.sim-fg-browse{background:#2980B9;color:white;border:none;border-radius:4px;padding:4px 9px;font-size:10px;font-weight:600;cursor:default}
+.sim-fg-hint{font-size:9px;color:#94A3B8;margin-top:3px;font-family:var(--font-mono)}
+.sim-fr{display:grid;grid-template-columns:90px 1fr;gap:6px;align-items:center;font-size:11px}
+.sim-fr-lbl{text-align:right;color:#64748B;font-weight:500}
+.sim-fsel{border:1px solid #CBD5E1;border-radius:4px;padding:4px 9px;font-size:11px;color:#1A3A5C;background:white;display:flex;justify-content:space-between}
+.sim-fsel span{color:#94A3B8;font-size:9px}
+.sim-fnum{border:1px solid #CBD5E1;border-radius:4px;padding:4px 9px;font-size:11px;color:#1A3A5C;background:white;display:flex;justify-content:space-between}
+.sim-fnum small{color:#94A3B8;font-size:9px}
+.sim-modal-ft{padding:10px 16px;border-top:1px solid #E2E8F0;display:flex;justify-content:flex-end;gap:7px;background:#F8FAFC}
+.sim-btn-cancel{background:white;border:1px solid #CBD5E1;color:#64748B;border-radius:5px;padding:5px 13px;font-size:11px;cursor:default}
+.sim-btn-save{background:#1A3A5C;color:white;border:none;border-radius:5px;padding:5px 13px;font-size:11px;font-weight:600;cursor:default}
+
+/* ── Lightbox images ── */
+.zoomable {
+  cursor: zoom-in;
+  transition: transform .15s, box-shadow .15s;
+  display: block;
+}
+.zoomable:hover {
+  transform: scale(1.015);
+  box-shadow: 0 8px 32px rgba(26,58,92,.22);
+}
+#lightbox{position:fixed;inset:0;z-index:1000;background:rgba(10,20,40,.9);display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#lightbox.open{display:flex;animation:lbFadeIn .18s ease}
+#lightbox.scroll-mode{align-items:flex-start;overflow-y:auto;padding:48px 5vw 64px;cursor:default}
+@keyframes lbFadeIn{from{opacity:0}to{opacity:1}}
+#lightbox-img{max-width:92vw;max-height:88vh;border-radius:6px;box-shadow:0 24px 80px rgba(0,0,0,.65);cursor:zoom-in;animation:lbZmIn .2s cubic-bezier(.34,1.56,.64,1);display:block;margin:auto}
+#lightbox.scroll-mode #lightbox-img{max-width:min(96vw,1100px);max-height:none;cursor:zoom-out;animation:none}
+@keyframes lbZmIn{from{transform:scale(.88);opacity:.5}to{transform:scale(1);opacity:1}}
+#lightbox-close{position:fixed;top:14px;right:18px;color:rgba(255,255,255,.7);font-size:1.9rem;font-weight:300;cursor:pointer;line-height:1;transition:color .15s;z-index:1001}
+#lightbox-close:hover{color:white}
+#lightbox-hint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.42);font-size:.73rem;font-family:var(--font-sans);pointer-events:none;white-space:nowrap}
+
+/* ── Topbar search ── */
+.tb-srch-wrap{position:relative;display:flex;align-items:center;gap:5px;margin-left:auto}
+.tb-srch-icon{position:absolute;left:9px;font-size:.75rem;color:var(--gray-300);pointer-events:none}
+.tb-srch-input{width:190px;border:1px solid var(--gray-300);border-radius:6px;padding:5px 10px 5px 28px;font-size:.8rem;font-family:var(--font-sans);outline:none;background:var(--white);color:var(--gray-700);transition:border-color .15s,width .2s}
+.tb-srch-input:focus{border-color:var(--blue);width:240px;box-shadow:0 0 0 2px rgba(41,128,185,.12)}
+.tb-srch-input::placeholder{color:var(--gray-300);font-size:.78rem}
+.tb-srch-count{font-size:.7rem;font-weight:600;color:var(--blue);min-width:52px;display:none;white-space:nowrap}
+.tb-srch-count.show{display:inline-block}
+.tb-srch-nav{display:none;background:none;border:1px solid var(--gray-300);border-radius:4px;padding:2px 6px;cursor:pointer;color:var(--gray-500);font-size:11px;line-height:1}
+.tb-srch-nav:hover{background:var(--gray-100)}
+.tb-srch-nav.show{display:inline-block}
+</style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div id="lightbox">
+  <span id="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt=""/>
+  <div id="lightbox-hint"></div>
+</div>
+
+<!-- ══ SEARCH BAR ═════════════════════════════════════════════════════════ -->
+<div id="search-bar">
+  <span style="color:#92400e;font-weight:600;font-size:12px">🔍 Recherche :</span>
+  <input id="search-input" type="text" placeholder="Saisir un mot-clé…" autocomplete="off"/>
+  <span id="search-count"></span>
+  <button class="search-nav" id="search-prev" title="Précédent">▲</button>
+  <button class="search-nav" id="search-next" title="Suivant">▼</button>
+  <button id="search-close" title="Fermer (Échap)">✕</button>
+</div>
+
+<!-- ══ SIDEBAR ════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h1>📋 BacArchive</h1>
+    <div class="ver">Aide — v1.0</div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Démarrage</div>
+    <nav>
+      <a href="#start"    class="active"><span class="ni">🚀</span> Démarrage rapide</a>
+      <a href="#config">            <span class="ni">⚙️</span> Configuration</a>
+    </nav>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Utilisation</div>
+    <nav>
+      <a href="#seance">  <span class="ni">💾</span> Copier une clé USB</a>
+      <a href="#archive"> <span class="ni">📂</span> Consulter l'archive</a>
+    </nav>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Documents</div>
+    <nav>
+      <a href="#docs">    <span class="ni">📄</span> Rapport &amp; Grille Excel</a>
+    </nav>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Référence</div>
+    <nav>
+      <a href="#statuts"> <span class="ni">🏷️</span> Statuts des candidats</a>
+      <a href="#ref">     <span class="ni">⌨️</span> Raccourcis &amp; Menus</a>
+      <a href="#faq">     <span class="ni">❓</span> FAQ — Foire aux questions</a>
+    </nav>
+  </div>
+
+  <div class="sidebar-footer">
+    © 2026 Communauté Tunisienne<br/>des Enseignants d'Informatique<br/>
+    <a href="https://github.com/romoez/BacArchive" target="_blank"
+       style="color:rgba(255,255,255,.4);font-size:.65rem">github.com/romoez/BacArchive</a>
+  </div>
+</aside>
+
+<!-- ══ MAIN ════════════════════════════════════════════════════════════ -->
+<div class="main">
+  <div class="topbar">
+    <span class="topbar-title">Aide</span>
+    <span class="topbar-badge">v1.0</span>
+    <div class="tb-srch-wrap">
+      <span class="tb-srch-icon">🔍</span>
+      <input class="tb-srch-input" id="tb-srch" type="text"
+             placeholder="Rechercher… (Ctrl+F)" autocomplete="off"/>
+      <span class="tb-srch-count" id="tb-count"></span>
+      <button class="tb-srch-nav" id="tb-prev" title="Précédent">▲</button>
+      <button class="tb-srch-nav" id="tb-next" title="Suivant">▼</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ══ DÉMARRAGE RAPIDE ══════════════════════════════════════════════ -->
+    <div id="start"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="qs-banner">
+        <h2>BacArchive</h2>
+        <div class="sub-txt">Collecte et archivage des travaux du Bac Pratique — 3 étapes suffisent</div>
+        <div class="qs-steps">
+          <div class="qs-step">
+            <div class="qs-num">1</div>
+            <div class="qs-step-title">Configurer</div>
+            <div class="qs-step-desc">Renseigner le dossier de sauvegarde, la matière et la section</div>
+          </div>
+          <div class="qs-step">
+            <div class="qs-num">2</div>
+            <div class="qs-step-title">Brancher la clé</div>
+            <div class="qs-step-desc">L'application détecte les candidats automatiquement</div>
+          </div>
+          <div class="qs-step">
+            <div class="qs-num">3</div>
+            <div class="qs-step-title">Copier</div>
+            <div class="qs-step-desc">Le rapport PDF et la grille Excel sont générés automatiquement</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ══ CONFIGURATION ═════════════════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="config"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Première utilisation</div>
+      <div class="section-title">Configuration</div>
+
+      <div class="sim-frame">
+        <div class="sim-modal-ov">
+          <div class="sim-modal">
+            <div class="sim-modal-hdr"><span>⚙ Paramètres Globaux</span><span class="x">✕</span></div>
+            <div class="sim-modal-body">
+              <div class="sim-fg">
+                <div class="sim-fg-lbl">📁 Dossier de sauvegarde <span class="b-req">OBLIGATOIRE</span></div>
+                <div class="sim-fg-row">
+                  <div class="sim-fg-input">D:\Bac2026_j1</div>
+                  <button class="sim-fg-browse">📁 Parcourir</button>
+                </div>
+                <div class="sim-fg-hint">D:\Bac2026_j1</div>
+              </div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Année Bac</span><div class="sim-fsel">2026 <span>▼</span></div></div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Lycée / Centre</span><div class="sim-fsel">Lycée 7 Octobre Ariana</div></div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Section</span><div class="sim-fsel">Section Sciences de l'Informatique (S.I.) <span>▼</span></div></div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Matière</span><div class="sim-fsel">Systèmes &amp; Technologies de l'Informatique <span>▼</span></div></div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Séance défaut</span><div class="sim-fsel">Séance-01 <span>▼</span></div></div>
+              <div class="sim-fr"><span class="sim-fr-lbl">Colonnes grille</span><div class="sim-fnum">15 <small>(5 – 30)</small></div></div>
+            </div>
+            <div class="sim-modal-ft">
+              <button class="sim-btn-cancel">Annuler</button>
+              <button class="sim-btn-save">✓ Enregistrer</button>
+            </div>
+          </div>
+        </div>
+        <div class="sim-caption">Paramètres Globaux — accès via <strong>⚙ Paramètres</strong> dans la barre du haut</div>
+      </div>
+
+      <table class="tbl">
+        <thead><tr><th>Paramètre</th><th>Description</th><th>Exemple</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Dossier de sauvegarde</strong> <span class="b-req">OBLIGATOIRE</span></td><td>Répertoire où seront archivés tous les travaux</td><td><code>D:\Bac2026_j1</code></td></tr>
+          <tr><td><strong>Année Bac</strong></td><td>Apparaît dans tous les documents générés</td><td><code>2026</code></td></tr>
+          <tr><td><strong>Lycée / Centre</strong></td><td>Optionnel — affiché dans l'en-tête des documents</td><td>Lycée 7 Octobre Ariana</td></tr>
+          <tr><td><strong>Section</strong></td><td>Section des candidats du labo</td><td>Sciences de l'Informatique (S.I.)</td></tr>
+          <tr><td><strong>Matière</strong></td><td>Matière de l'épreuve pratique</td><td>STI</td></tr>
+          <tr><td><strong>Séance défaut</strong></td><td>Numéro de séance pré-rempli au démarrage</td><td>Séance-01</td></tr>
+          <tr><td><strong>Colonnes grille</strong></td><td>Nombre de questions dans la grille Excel (5–30)</td><td><code>15</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ══ DÉROULEMENT D'UNE SÉANCE ══════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="seance"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Utilisation principale</div>
+      <div class="section-title">Copier une clé USB</div>
+
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-b">
+          <div class="step-t">Brancher la clé USB du labo</div>
+          <div class="step-d">L'application détecte automatiquement la clé et liste les dossiers candidats (format <code>NNNNNN</code>). Si la clé contient plusieurs sous-dossiers de séance, sélectionnez le bon dans la barre latérale.</div>
+        </div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-b">
+          <div class="step-t">Vérifier Séance et Labo</div>
+          <div class="step-d">Confirmez les numéros dans le panneau gauche. Le chemin de destination se met à jour automatiquement : <code>DossierSauvegarde\Séance-NN\Labo-NN</code>.</div>
+        </div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-b">
+          <div class="step-t">Contrôler la liste des candidats</div>
+          <div class="step-d">Vérifiez les statuts : <span class="badge b-green">✓ Présent</span> <span class="badge b-gray">Absent</span> <span class="badge b-red">⚠ Non-conforme</span>. Tout non-conforme doit être réglé avant de copier — la copie sera bloquée.</div>
+        </div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-b">
+          <div class="step-t">Cliquer « Copier &amp; Vérifier (MD5) »</div>
+          <div class="step-d">Chaque fichier est copié puis vérifié par empreinte MD5. En cas d'erreur, la copie est relancée automatiquement. La destination reste intacte si la copie échoue.</div>
+        </div></div>
+      </div>
+
+      <!-- Résultat automatique après copie réussie -->
+      <div style="background:#F0FDF4;border:1.5px solid #86EFAC;border-radius:8px;padding:14px 18px;display:flex;align-items:flex-start;gap:14px;margin:4px 0 20px">
+        <span style="font-size:1.4rem">✅</span>
+        <div>
+          <div style="font-weight:700;color:#166534;margin-bottom:5px;font-size:.9rem">Résultat automatique après copie réussie</div>
+          <div style="font-size:.84rem;color:#166534;display:flex;gap:16px;flex-wrap:wrap">
+            <span>📄 <strong>Rapport PDF</strong> — généré automatiquement</span>
+            <span>📊 <strong>Grille Excel</strong> — générée automatiquement</span>
+          </div>
+          <div style="font-size:.78rem;color:#4ADE80;margin-top:4px;color:#166534;opacity:.8">Les fichiers sont enregistrés dans <code style="background:rgba(0,0,0,.05)">DossierSauvegarde\Séance-NN\Labo-NN\</code></div>
+        </div>
+      </div>
+
+      <!-- Simulation cas normal -->
+      <div class="sim-frame">
+        <div class="sim-topbar">
+          <span class="sim-brand">BacArchive</span><span class="sim-sep">|</span>
+          <span class="sim-meta">2026</span><span class="sim-dot">•</span><span class="sim-meta">S.I.</span><span class="sim-dot">•</span><span class="sim-meta">STI</span><span class="sim-dot">•</span><span class="sim-meta">Lycée 7 Octobre Ariana</span>
+          <div class="sim-topbar-right"><button class="sim-btn-params">⚙ Paramètres</button></div>
+        </div>
+        <div class="sim-tabs">
+          <div class="sim-tab active">💾 Récupération</div>
+          <div class="sim-tab">📂 Archive</div>
+        </div>
+        <div class="sim-body">
+          <div class="sim-sb">
+            <div class="sim-sb-lbl">Clé USB</div>
+            <div class="sim-drive">
+              <div class="sim-drive-row"><span>💾 H: — LABO-2</span><span class="sim-folder-btn" title="Ouvrir dans l'explorateur">📁</span></div>
+              <div class="sim-drive-sub">H:\  28.5 Go / 29.3 Go</div>
+            </div>
+            <div class="sim-sb-lbl">Séance</div>
+            <div class="sim-sel">Séance-01 <span>▼</span></div>
+            <div class="sim-sb-lbl">Labo</div>
+            <div class="sim-sel">Labo-02 <span>▼</span></div>
+            <div class="sim-path">→ D:\Bac2026_j1\Séance-01\Labo-02</div>
+            <div style="flex:1"></div>
+            <div class="sim-copy-btn">▶ Copier &amp; Vérifier (MD5)</div>
+          </div>
+          <div class="sim-content">
+            <div class="sim-stats">
+              <div class="sim-stat g"><div class="sim-stat-v">13</div><div class="sim-stat-l">Présents</div></div>
+              <div class="sim-stat b"><div class="sim-stat-v">14</div><div class="sim-stat-l">Total</div></div>
+              <div class="sim-stat o"><div class="sim-stat-v">1</div><div class="sim-stat-l">Absents</div></div>
+            </div>
+            <table class="sim-tbl">
+              <thead><tr><th>#</th><th>N° Ins.</th><th>Files</th><th>Nombre de Fichiers / Type (top 6)</th><th>Taille</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>256-319</td><td>14</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.zip • 1.png • 1.js</td><td>792.0 Ko</td></tr>
+                <tr><td>2</td><td>256-320</td><td>13</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.zip • 1.png • 1.js</td><td>642.4 Ko</td></tr>
+                <tr><td>3</td><td>256-321</td><td>14</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.zip • 1.png • 1.js</td><td>679.4 Ko</td></tr>
+                <tr><td>4</td><td>256-322</td><td>14</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.zip • 1.png • 1.js</td><td>665.9 Ko</td></tr>
+                <tr><td>5</td><td>256-323</td><td>15</td><td class="sim-ext">4.html • 3.sql • 3.php • 1.zip • 1.png • 1.js</td><td>805.1 Ko</td></tr>
+                <tr class="absent"><td>6</td><td>256-324</td><td></td><td colspan="2" style="text-align:center"><span class="abs">Absent</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="sim-dest"><span>📁</span><span class="dl">Dossier de sauvegarde :</span><span>D:\Bac2026_j1</span></div>
+        <div class="sim-caption">Mode Récupération — 6 candidats (5 présents · 1 absent) — prêt à copier</div>
+      </div>
+
+      <!-- Simulation cas non-conforme -->
+      <div class="sim-frame">
+        <div class="sim-topbar">
+          <span class="sim-brand">BacArchive</span><span class="sim-sep">|</span>
+          <span class="sim-meta">2026</span><span class="sim-dot">•</span><span class="sim-meta">S.I.</span><span class="sim-dot">•</span><span class="sim-meta">STI</span><span class="sim-dot">•</span><span class="sim-meta">Lycée 7 Octobre Ariana</span>
+          <div class="sim-topbar-right"><button class="sim-btn-params">⚙ Paramètres</button></div>
+        </div>
+        <div class="sim-tabs">
+          <div class="sim-tab active">💾 Récupération</div>
+          <div class="sim-tab">📂 Archive</div>
+        </div>
+        <div class="sim-body">
+          <div class="sim-sb">
+            <div class="sim-sb-lbl">Clé USB</div>
+            <div class="sim-drive">
+              <div class="sim-drive-row"><span>💾 G: — LABO-1</span><span class="sim-folder-btn">📁</span></div>
+              <div class="sim-drive-sub">G:\  14.2 Go / 29.3 Go</div>
+            </div>
+            <div class="sim-sb-lbl">Séance</div>
+            <div class="sim-sel">Séance-02 <span>▼</span></div>
+            <div class="sim-sb-lbl">Labo</div>
+            <div class="sim-sel">Labo-01 <span>▼</span></div>
+            <div class="sim-path">→ D:\Bac2026_j1\Séance-02\Labo-01</div>
+            <div style="flex:1"></div>
+            <div class="sim-copy-btn" style="opacity:.4;cursor:not-allowed">▶ Copier &amp; Vérifier (MD5)</div>
+          </div>
+          <div class="sim-content">
+            <div class="sim-stats">
+              <div class="sim-stat g"><div class="sim-stat-v">9</div><div class="sim-stat-l">Présents</div></div>
+              <div class="sim-stat b"><div class="sim-stat-v">12</div><div class="sim-stat-l">Total</div></div>
+              <div class="sim-stat o"><div class="sim-stat-v">1</div><div class="sim-stat-l">Absents</div></div>
+              <div class="sim-stat r"><div class="sim-stat-v">2</div><div class="sim-stat-l">Non-conf.</div></div>
+            </div>
+            <div class="sim-toast">
+              <span style="font-size:13px">⛔</span>
+              <div><strong>Copie bloquée — 2 dossier(s) non-conformes</strong><br/>
+              Candidats : 256-309, 256-314<br/>
+              <span style="opacity:.8">Dossier vide sans sous-dossier "Absent".</span></div>
+            </div>
+            <table class="sim-tbl">
+              <thead><tr><th>#</th><th>N° Ins.</th><th>Files</th><th>Nombre de Fichiers / Type</th><th>Taille</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>256-305</td><td>12</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.zip • 1.png • 1.js</td><td>612.0 Ko</td></tr>
+                <tr class="nc"><td>2</td><td>256-309</td><td>0</td><td colspan="2" style="color:#E74C3C;font-weight:700">⚠ Non-conforme — dossier vide</td></tr>
+                <tr class="absent"><td>3</td><td>256-311</td><td></td><td colspan="2" style="text-align:center"><span class="abs">Absent</span></td></tr>
+                <tr class="nc"><td>4</td><td>256-314</td><td>0</td><td colspan="2" style="color:#E74C3C;font-weight:700">⚠ Non-conforme — dossier vide</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="sim-dest"><span>📁</span><span class="dl">Dossier de sauvegarde :</span><span>D:\Bac2026_j1</span></div>
+        <div class="sim-caption">Copie bloquée — 2 dossiers non-conformes doivent être résolus avant de copier</div>
+      </div>
+    </div>
+
+    <!-- ══ MODE ARCHIVE ══════════════════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="archive"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Après la copie</div>
+      <div class="section-title">Consulter l'archive</div>
+      <div class="section-lead">Retrouvez et gérez toutes les séances copiées. Ouvrez ou régénérez les documents depuis n'importe quel labo.</div>
+
+      <!-- Dashboard vue d'ensemble -->
+      <div class="sim-frame">
+        <div class="sim-topbar">
+          <span class="sim-brand">BacArchive</span><span class="sim-sep">|</span>
+          <span class="sim-meta">2026</span><span class="sim-dot">•</span><span class="sim-meta">S.I.</span><span class="sim-dot">•</span><span class="sim-meta">STI</span><span class="sim-dot">•</span><span class="sim-meta">Lycée 7 Octobre Ariana</span>
+          <div class="sim-topbar-right"><button class="sim-btn-params">⚙ Paramètres</button></div>
+        </div>
+        <div class="sim-tabs">
+          <div class="sim-tab">💾 Récupération</div>
+          <div class="sim-tab active">📂 Archive</div>
+        </div>
+        <div style="padding:14px 16px;background:#F8FAFC;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:11px;font-weight:700;color:#1A3A5C;margin-bottom:2px">Vue d'ensemble</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <!-- Carte séance 1 -->
+            <div style="flex:1;min-width:180px;background:white;border:1px solid #D0DCE8;border-radius:7px;padding:10px 12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;color:#1A3A5C">Séance-01</span>
+                <div style="font-size:11px"><span style="font-weight:800;color:#27AE60">39</span><span style="color:#94A3B8">/42</span></div>
+              </div>
+              <div style="height:3px;background:#E2E8F0;border-radius:2px;overflow:hidden;margin-bottom:8px"><div style="width:93%;height:100%;background:#27AE60;border-radius:2px"></div></div>
+              <div style="display:flex;gap:5px;flex-wrap:wrap">
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-01</span>
+                <span style="background:#2980B9;color:white;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-02</span>
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-03</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid #F1F5F9">
+                <span style="font-size:9px;color:#94A3B8">3 labos</span>
+                <div style="display:flex;gap:5px">
+                  <span style="background:#E8F8F0;color:#166534;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">P 3/3</span>
+                  <span style="background:#E8F8F0;color:#166534;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">X 3/3</span>
+                </div>
+                <button style="background:#1A3A5C;color:white;border:none;border-radius:4px;font-size:9px;padding:3px 8px;cursor:default">Détail →</button>
+              </div>
+            </div>
+            <!-- Carte séance 2 -->
+            <div style="flex:1;min-width:180px;background:white;border:1.5px solid #FECACA;border-radius:7px;padding:10px 12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;color:#991B1B">Séance-02 ⚠</span>
+                <div style="font-size:11px"><span style="font-weight:800;color:#27AE60">25</span><span style="color:#94A3B8">/28</span><span style="font-size:9px;color:#E74C3C;margin-left:4px;font-weight:700">2NC</span></div>
+              </div>
+              <div style="height:3px;background:#E2E8F0;border-radius:2px;overflow:hidden;margin-bottom:8px"><div style="width:89%;height:100%;background:#E74C3C;border-radius:2px"></div></div>
+              <div style="display:flex;gap:5px">
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-01</span>
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-02</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid #F1F5F9">
+                <span style="font-size:9px;color:#94A3B8">2 labos</span>
+                <div style="display:flex;gap:5px">
+                  <span style="background:#FEF3C7;color:#B45309;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">P 1/2</span>
+                  <span style="background:#FEF3C7;color:#B45309;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">X 1/2</span>
+                </div>
+                <button style="background:#1A3A5C;color:white;border:none;border-radius:4px;font-size:9px;padding:3px 8px;cursor:default">Détail →</button>
+              </div>
+            </div>
+            <!-- Carte séance 3 -->
+            <div style="flex:1;min-width:180px;background:white;border:1px solid #D0DCE8;border-radius:7px;padding:10px 12px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;color:#1A3A5C">Séance-03</span>
+                <div style="font-size:11px"><span style="font-weight:800;color:#27AE60">27</span><span style="color:#94A3B8">/28</span></div>
+              </div>
+              <div style="height:3px;background:#E2E8F0;border-radius:2px;overflow:hidden;margin-bottom:8px"><div style="width:96%;height:100%;background:#27AE60;border-radius:2px"></div></div>
+              <div style="display:flex;gap:5px">
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-01</span>
+                <span style="background:#EBF3FA;border:1px solid #D0DCE8;color:#1A3A5C;font-size:9px;padding:2px 7px;border-radius:4px;cursor:default">Labo-02</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:7px;border-top:1px solid #F1F5F9">
+                <span style="font-size:9px;color:#94A3B8">2 labos</span>
+                <div style="display:flex;gap:5px">
+                  <span style="background:#F1F5F9;color:#94A3B8;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">P 0/2</span>
+                  <span style="background:#F1F5F9;color:#94A3B8;font-size:9px;padding:1px 5px;border-radius:10px;font-weight:600">X 0/2</span>
+                </div>
+                <button style="background:#1A3A5C;color:white;border:none;border-radius:4px;font-size:9px;padding:3px 8px;cursor:default">Détail →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sim-dest"><span>📁</span><span class="dl">Dossier de sauvegarde :</span><span>D:\Bac2026_j1</span></div>
+        <div class="sim-caption">Vue d'ensemble — 3 séances · Séance-02 en rouge : 2 non-conformes à régler · Pastilles P/X : complétion PDF/Excel par labo</div>
+      </div>
+
+      <div class="sim-frame">
+        <div class="sim-topbar">
+          <span class="sim-brand">BacArchive</span><span class="sim-sep">|</span>
+          <span class="sim-meta">2026</span><span class="sim-dot">•</span><span class="sim-meta">S.I.</span><span class="sim-dot">•</span><span class="sim-meta">STI</span><span class="sim-dot">•</span><span class="sim-meta">Lycée 7 Octobre Ariana</span>
+          <div class="sim-topbar-right"><button class="sim-btn-params">⚙ Paramètres</button></div>
+        </div>
+        <div class="sim-tabs">
+          <div class="sim-tab">💾 Récupération</div>
+          <div class="sim-tab active">📂 Archive</div>
+        </div>
+        <div class="sim-body" style="min-height:320px">
+          <div class="sim-arch-sb">
+            <div class="sim-arch-hdr"><span>Archive</span><span style="color:#94A3B8;cursor:default;font-size:10px">↺</span></div>
+            <div class="acc-item">
+              <div class="acc-row sel"><span class="acc-arr">▾</span><span class="acc-nm">Séance-01</span><span class="acc-ct">39</span><span class="acc-tot">/42</span></div>
+              <div class="acc-labos">
+                <div class="acc-labo"><span class="acc-labo-nm n">Labo-01</span><div class="acc-bar"><div class="acc-bar-f" style="width:93%;background:#27AE60"></div></div><span class="acc-lc">13</span><span class="acc-tot" style="font-size:8px">/14</span><span class="acc-doc acc-doc-p">P</span><span class="acc-doc acc-doc-x">X</span></div>
+                <div class="acc-labo sel"><span class="acc-labo-nm s">Labo-02</span><div class="acc-bar"><div class="acc-bar-f" style="width:93%;background:#27AE60"></div></div><span class="acc-lc s">13</span><span style="font-size:8px;color:rgba(255,255,255,.4)">/14</span><span class="acc-doc acc-doc-p">P</span><span class="acc-doc acc-doc-x">X</span></div>
+                <div class="acc-labo"><span class="acc-labo-nm n">Labo-03</span><div class="acc-bar"><div class="acc-bar-f" style="width:86%;background:#27AE60"></div></div><span class="acc-lc">12</span><span class="acc-tot" style="font-size:8px">/14</span><span class="acc-doc acc-doc-p">P</span><span class="acc-doc acc-doc-x">X</span></div>
+              </div>
+            </div>
+            <div class="acc-item"><div class="acc-row"><span class="acc-arr">▸</span><span class="acc-nm">Séance-02</span><span class="acc-ct">25</span><span class="acc-tot">/28</span><span class="acc-warn">⚠</span></div></div>
+            <div class="acc-item"><div class="acc-row"><span class="acc-arr">▸</span><span class="acc-nm">Séance-03</span><span class="acc-ct">27</span><span class="acc-tot">/28</span></div></div>
+          </div>
+          <div class="sim-arch-content">
+            <div class="sim-breadcrumb">
+              <span class="sim-bc-link">← Vue d'ensemble</span>
+              <span class="sim-bc-sep">›</span>
+              <span class="sim-bc-link">Séance-01</span>
+              <span class="sim-bc-sep">›</span>
+              <span class="sim-bc-cur">Labo-02</span>
+            </div>
+            <div class="sim-actions">
+              <button class="sim-act-btn fold">📂 Dossier</button>
+              <div style="display:flex;align-items:center;gap:3px">
+                <button class="sim-act-btn pdf">📄 Rapport PDF</button>
+                <button class="sim-regen">↺</button>
+              </div>
+              <div style="display:flex;align-items:center;gap:3px">
+                <button class="sim-act-btn xls">📊 Grille Excel</button>
+                <button class="sim-regen">↺</button>
+              </div>
+            </div>
+            <div class="sim-stats">
+              <div class="sim-stat g" style="padding:5px 12px"><div class="sim-stat-v" style="font-size:14px">13</div><div class="sim-stat-l">Présents</div></div>
+              <div class="sim-stat b" style="padding:5px 12px"><div class="sim-stat-v" style="font-size:14px">14</div><div class="sim-stat-l">Total</div></div>
+              <div class="sim-stat o" style="padding:5px 12px"><div class="sim-stat-v" style="font-size:14px">1</div><div class="sim-stat-l">Absents</div></div>
+            </div>
+            <table class="sim-tbl">
+              <thead><tr><th>#</th><th>N° Ins. ▲</th><th>Files</th><th>Type / Nombre (top 6)</th><th>Taille</th><th>Statut</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>256-319</td><td>14</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.css</td><td>792.0 Ko</td><td style="color:#27AE60;font-weight:700;text-align:center">✓</td></tr>
+                <tr><td>2</td><td>256-320</td><td>13</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.js</td><td>642.4 Ko</td><td style="color:#27AE60;font-weight:700;text-align:center">✓</td></tr>
+                <tr><td>3</td><td>256-321</td><td>14</td><td class="sim-ext">4.html • 3.php • 2.sql • 1.js</td><td>679.4 Ko</td><td style="color:#27AE60;font-weight:700;text-align:center">✓</td></tr>
+                <tr class="absent"><td>4</td><td style="font-weight:700;color:#E67E22">256-322</td><td></td><td colspan="2" style="text-align:center"><span class="abs">Absent</span></td><td style="color:#E67E22;text-align:center">Absent</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="sim-dest"><span>📁</span><span class="dl">Dossier de sauvegarde :</span><span>D:\Bac2026_j1</span></div>
+        <div class="sim-caption">Mode Archive — Séance-01 ouverte, Labo-02 sélectionné · Séance-02 marquée ⚠ (non-conformes)</div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="sub-title">Barre latérale</div>
+          <ul style="padding-left:16px;line-height:2;font-size:.84rem;color:var(--gray-700)">
+            <li>Cliquer sur une séance révèle ses labos</li>
+            <li>Badge <span style="background:rgba(192,57,43,.15);color:#c0392b;font-size:.72rem;font-weight:700;padding:1px 5px;border-radius:3px;font-family:var(--font-mono)">P</span> = Rapport PDF généré&nbsp;&nbsp;&nbsp;<span style="background:rgba(39,174,96,.15);color:#27ae60;font-size:.72rem;font-weight:700;padding:1px 5px;border-radius:3px;font-family:var(--font-mono)">X</span> = Grille Excel générée</li>
+            <li>Liseré <span style="color:var(--red)">rouge</span> = non-conformes ou fraudes</li>
+          </ul>
+        </div>
+        <div>
+          <div class="sub-title">Boutons d'action</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <button style="background:#F59E0B;color:white;border:none;border-radius:5px;padding:6px 12px;font-size:12px;font-weight:600;cursor:default;min-width:120px;display:flex;align-items:center;gap:5px">📂 Dossier</button>
+              <span style="font-size:.82rem;color:var(--gray-600)">Ouvre le dossier du labo dans l'Explorateur Windows</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="display:flex;align-items:center;gap:3px;min-width:120px">
+                <button style="background:#E74C3C;color:white;border:none;border-radius:5px;padding:6px 10px;font-size:12px;font-weight:600;cursor:default;display:flex;align-items:center;gap:4px;flex:1">📄 Rapport PDF</button>
+                <button style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:4px;padding:5px 7px;font-size:11px;cursor:default;color:#64748B;font-weight:600">↺</button>
+              </div>
+              <span style="font-size:.82rem;color:var(--gray-600)">Ouvre le rapport · <strong style="color:var(--navy)">↺</strong> régénère le rapport</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <div style="display:flex;align-items:center;gap:3px;min-width:120px">
+                <button style="background:#27AE60;color:white;border:none;border-radius:5px;padding:6px 10px;font-size:12px;font-weight:600;cursor:default;display:flex;align-items:center;gap:4px;flex:1">📊 Grille Excel</button>
+                <button style="background:#F1F5F9;border:1px solid #CBD5E1;border-radius:4px;padding:5px 7px;font-size:11px;cursor:default;color:#64748B;font-weight:600">↺</button>
+              </div>
+              <span style="font-size:.82rem;color:var(--gray-600)">Ouvre la grille · <strong style="color:var(--navy)">↺</strong> régénère la grille</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RAPPORT & GRILLE ══════════════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="docs"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Documents générés</div>
+      <div class="section-title">Rapport PDF &amp; Grille Excel</div>
+      <div class="section-lead">Générés automatiquement après chaque copie réussie. Régénérables à tout moment depuis le mode Archive.</div>
+
+      <div class="two-col" style="align-items:start">
+        <div>
+          <div class="sub-title">Rapport PDF</div>
+          <img src="BacArchive_Master_Rapport.png" alt="Rapport PDF de séance" class="zoomable"
+               style="width:100%;border-radius:6px;border:1px solid var(--gray-300);box-shadow:var(--shadow)"/>
+          <div style="font-size:.78rem;color:var(--gray-500);margin-top:6px;font-family:var(--font-mono)">
+            Rapport__Seance-01_Labo-02__2026-05-16.pdf
+          </div>
+        </div>
+        <div>
+          <div class="sub-title">Grille Excel</div>
+          <img src="BacArchive_Master_Grille.png" alt="Grille Excel d'évaluation" class="zoomable"
+               style="width:100%;border-radius:6px;border:1px solid var(--gray-300);box-shadow:var(--shadow)"/>
+          <div style="font-size:.78rem;color:var(--gray-500);margin-top:6px;font-family:var(--font-mono)">
+            GrilleEval_Seance-01_Labo-02__2026-05-16.xlsx
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-title" style="margin-top:20px">Grille Excel — détails</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0">
+        <div style="background:var(--white);border:1px solid var(--gray-300);border-radius:8px;padding:14px">
+          <div style="font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:10px">📐 Impression</div>
+          <div style="font-size:.82rem;color:var(--gray-600);line-height:1.8">
+            Orientation paysage A4, centré horizontalement<br/>
+            Zoom adaptatif (selon nb. candidats &amp; questions)<br/>
+            En-têtes répétés sur chaque page
+          </div>
+        </div>
+        <div style="background:var(--white);border:1px solid var(--gray-300);border-radius:8px;padding:14px">
+          <div style="font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:10px">🔢 Calculs automatiques</div>
+          <div style="font-size:.82rem;color:var(--gray-600);line-height:1.8">
+            Total = somme des notes saisies (formule Excel)<br/>
+            Barème = somme automatique des points par question<br/>
+            Absents : note conventionnelle <strong>88,88</strong>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--white);border:1px solid var(--gray-300);border-radius:8px;padding:14px;margin-top:0">
+        <div style="font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:10px">🎨 Mise en forme conditionnelle</div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:.82rem">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:90px;flex-shrink:0;background:#FFCDD2;color:#B71C1C;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:3px;text-align:center">Note &gt; Barème</span>
+            <span style="color:var(--gray-600)">Fond rouge + texte rouge — priorité maximale</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:90px;flex-shrink:0;background:#FFCDD2;color:#B71C1C;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:3px;text-align:center">Hors [0 ; 20]</span>
+            <span style="color:var(--gray-600)">Fond rouge dans la colonne Total</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="width:90px;flex-shrink:0;color:#B71C1C;font-size:.75rem;font-weight:600;padding:2px 8px;border-radius:3px;text-align:center;border:1px solid #FFCDD2">Non × 0,25</span>
+            <span style="color:var(--gray-600)">Texte rouge foncé (valeur non conforme au barème)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STATUTS DES CANDIDATS ═════════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="statuts"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Référence</div>
+      <div class="section-title">Statuts des candidats</div>
+
+      <table class="tbl">
+        <thead><tr><th>Statut</th><th>Condition de détection</th><th>Copie</th><th>Grille Excel</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="badge b-green">✓ Présent</span></td>
+            <td>Au moins 1 fichier dans le dossier (recherche récursive)</td>
+            <td>Intégrale + vérification MD5</td>
+            <td>Ligne normale, saisie de note</td>
+          </tr>
+          <tr>
+            <td><span class="badge b-gray">● Absent</span></td>
+            <td>Aucun fichier + sous-dossier <code>Absent</code> (ou <code>Absente</code>, <code>Abs</code>…)</td>
+            <td>Dossier copié tel quel</td>
+            <td>Ligne grisée, note <strong>88,88</strong></td>
+          </tr>
+          <tr>
+            <td><span class="badge b-red">⚠ Non-conforme</span></td>
+            <td>Dossier totalement vide — aucun fichier, aucun sous-dossier</td>
+            <td style="color:var(--red);font-weight:600">Copie bloquée</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><span class="badge b-red">⛔ Fraude</span></td>
+            <td>Détecté par BacBackup</td>
+            <td>Copié avec signalement</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">
+        <span class="ci">⚠️</span>
+        <div><strong>Dossier Non-conforme :</strong> un dossier totalement vide est ambigu — impossible de savoir si le candidat a travaillé ou s'il était absent sans documentation. La copie est intégralement bloquée jusqu'à résolution. Pour documenter une absence : créer un sous-dossier <code>Absent</code> <em>vide</em> dans le dossier du candidat sur la clé USB, puis appuyer sur <kbd>F5</kbd>.</div>
+      </div>
+    </div>
+
+    <!-- ══ RACCOURCIS & MENUS ════════════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="ref"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Référence</div>
+      <div class="section-title">Raccourcis &amp; Menus</div>
+
+      <div class="two-col">
+        <div>
+          <div class="sub-title">Raccourcis clavier</div>
+          <div class="sc-grid" style="grid-template-columns:1fr">
+            <div class="sc-item"><kbd>F1</kbd> <span class="sc-desc">Ouvrir cette aide</span></div>
+            <div class="sc-item"><kbd>F5</kbd> <span class="sc-desc">Rafraîchir (clés USB / archive)</span></div>
+            <div class="sc-item"><kbd>F11</kbd> <span class="sc-desc">Basculer Plein écran</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>1</kbd> <span class="sc-desc">Mode Récupération</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>2</kbd> <span class="sc-desc">Mode Archive</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>,</kbd> <span class="sc-desc">Paramètres</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>Q</kbd> <span class="sc-desc">Quitter</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>+</kbd> <span class="sc-desc">Zoom avant</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>-</kbd> <span class="sc-desc">Zoom arrière</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>0</kbd> <span class="sc-desc">Taille réelle (100&thinsp;%)</span></div>
+            <div class="sc-item"><kbd>Ctrl</kbd>+<kbd>Molette</kbd> <span class="sc-desc">Zoom avant / arrière (navigateur)</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="sub-title">Menu Fichier</div>
+          <table class="tbl">
+            <tbody>
+              <tr><td><strong>Paramètres…</strong></td><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td></tr>
+              <tr><td><strong>Rapport de fin de journée</strong></td><td>Génère un PDF récapitulatif de toutes les séances</td></tr>
+              <tr><td><strong>Quitter</strong></td><td><kbd>Ctrl</kbd>+<kbd>Q</kbd></td></tr>
+            </tbody>
+          </table>
+          <div class="sub-title" style="margin-top:16px">Menu Affichage</div>
+          <table class="tbl">
+            <tbody>
+              <tr><td><strong>Mode Récupération</strong></td><td><kbd>Ctrl</kbd>+<kbd>1</kbd></td></tr>
+              <tr><td><strong>Mode Archive</strong></td><td><kbd>Ctrl</kbd>+<kbd>2</kbd></td></tr>
+              <tr><td colspan="2"><hr style="border:none;border-top:1px solid #e2e8f0;margin:4px 0"/></td></tr>
+              <tr>
+                <td><strong>Zoom ▶</strong> <span style="font-size:.75rem;color:#64748b">(sous-menu)</span></td>
+                <td style="padding:0">
+                  <table style="width:100%;border:none">
+                    <tr><td style="border:none;padding:2px 6px">Zoom avant</td><td style="border:none;padding:2px 6px"><kbd>Ctrl</kbd>+<kbd>+</kbd></td></tr>
+                    <tr><td style="border:none;padding:2px 6px">Zoom arrière</td><td style="border:none;padding:2px 6px"><kbd>Ctrl</kbd>+<kbd>-</kbd></td></tr>
+                    <tr><td style="border:none;padding:2px 6px">Taille réelle</td><td style="border:none;padding:2px 6px"><kbd>Ctrl</kbd>+<kbd>0</kbd></td></tr>
+                  </table>
+                </td>
+              </tr>
+              <tr><td colspan="2"><hr style="border:none;border-top:1px solid #e2e8f0;margin:4px 0"/></td></tr>
+              <tr><td><strong>Plein écran</strong></td><td><kbd>F11</kbd> — bascule plein écran / fenêtré</td></tr>
+            </tbody>
+          </table>
+          <div class="sub-title" style="margin-top:16px">Menu Aide</div>
+          <table class="tbl">
+            <tbody>
+              <tr><td><strong>Aide BacArchive Master</strong></td><td><kbd>F1</kbd></td></tr>
+              <tr><td><strong>Visiter le projet sur GitHub</strong></td><td>Ouvre le navigateur</td></tr>
+              <tr><td><strong>À propos…</strong></td><td>Version, licence, contact</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="sub-title" style="margin-top:8px">Paramètres — emplacement du fichier</div>
+      <div class="callout info">
+        <span class="ci">📁</span>
+        <div>Les paramètres sont sauvegardés dans :<br/>
+        <code>C:&#92;Users&#92;&lt;NomUtilisateur&gt;&#92;AppData&#92;Roaming&#92;BacArchive&#92;settings.ini</code></div>
+      </div>
+    </div>
+
+    <!-- ══ PROBLÈMES FRÉQUENTS (FAQ) ════════════════════════════════════ -->
+    <hr class="divider"/>
+    <div id="faq"><div class="section-anchor"></div></div>
+    <div class="section">
+      <div class="eyebrow">Aide rapide</div>
+      <div class="section-title">FAQ — Foire aux questions</div>
+      <div id="faq-list"></div>
+    </div>
+
+    <div style="text-align:center;padding:20px 0;font-size:.76rem;color:#475569;line-height:2">
+      BacArchive Master — © 2026 Communauté Tunisienne des Enseignants d'Informatique<br/>
+      <a href="https://github.com/romoez/BacArchive" target="_blank"
+         style="color:var(--blue);font-family:var(--font-mono);font-size:.72rem">
+        github.com/romoez/BacArchive
+      </a>
+    </div>
+  </div><!-- /.content -->
+</div><!-- /.main -->
+
+<button id="scroll-top" title="Revenir en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+const faqs = [
+  {
+    cat: "Blocages &amp; Erreurs",
+    desc: "Situations qui empêchent la copie — à résoudre en priorité",
+    items: [
+      { q:"La copie est bloquée : dossiers non-conformes", a:"Un ou plusieurs dossiers candidats sont totalement vides (ni fichiers de travail, ni sous-dossier <code>Absent</code>). Pour chaque candidat concerné :<br/>• S'il a travaillé → vérifiez ses fichiers sur la clé USB.<br/>• S'il est absent → ouvrez son dossier (<code>NNNNNN</code>) sur la clé et créez-y un sous-dossier vide nommé <code>Absent</code>.<br/>Appuyez sur <kbd>F5</kbd> pour relancer le scan. La copie se débloque dès que tous les dossiers sont conformes." },
+      { q:"La copie est bloquée : dossier de destination existant", a:"La combinaison Séance/Labo a déjà été copiée dans l'archive. Modifiez le numéro de <strong>Séance</strong> ou de <strong>Labo</strong> dans le panneau gauche, puis relancez." },
+      { q:"La copie est bloquée : numéros déjà présents dans l'archive", a:"Certains numéros de candidats existent déjà dans l'archive pour ce labo. Vérifiez que vous utilisez la bonne clé USB et le bon sous-dossier source." },
+      { q:"La copie a échoué en cours (clé retirée accidentellement)", a:"La destination reste intacte — rien n'est écrit dans le dossier final tant que la copie n'est pas complètement vérifiée. Rebranchez la clé USB et relancez la copie normalement." },
+    ]
+  },
+  {
+    cat: "Absents &amp; Non-conformes",
+    items: [
+      { q:"Comment documenter l'absence d'un candidat ?", a:"<strong>Avant la copie (sur la clé USB) :</strong><br/>Ouvrez le dossier <code>NNNNNN</code> du candidat sur la clé. Créez un sous-dossier nommé <code>Absent</code> (ou <code>Absente</code>, <code>Abs</code>…). Ce sous-dossier doit rester <strong>vide</strong> — aucun fichier ne doit être présent dans le dossier d'un candidat absent. Appuyez sur <kbd>F5</kbd> → le candidat passe au statut Absent.<br/><br/><strong>Après la copie (dans l'archive) :</strong><br/>Ouvrez le dossier du candidat via <strong>📂 Dossier</strong> en mode Archive. Créez-y un sous-dossier <code>Absent</code> vide. Appuyez sur <kbd>F5</kbd> en mode Archive, puis cliquez sur <strong>↺</strong> pour régénérer les documents." },
+      { q:"J'ai ajouté un dossier candidat manuellement dans l'archive — est-il pris en compte ?", a:"Oui, si le dossier est nommé au format <code>NNNNNN</code> (6 chiffres) et placé dans <code>Séance-NN\\Labo-NN</code>. Appuyez sur <kbd>F5</kbd> en mode Archive pour le détecter.<br/><br/>Les documents existants ne se mettent <strong>pas</strong> à jour automatiquement. En mode Archive, sélectionnez le labo concerné, puis :<br/>• Cliquez sur <strong>↺</strong> à côté du bouton <span style='background:#E74C3C;color:white;font-size:.72rem;padding:1px 7px;border-radius:3px;font-weight:600'>📄 Rapport PDF</span> pour régénérer le rapport.<br/>• Cliquez sur <strong>↺</strong> à côté du bouton <span style='background:#27AE60;color:white;font-size:.72rem;padding:1px 7px;border-radius:3px;font-weight:600'>📊 Grille Excel</span> pour régénérer la grille.<br/><br/><em>Note : le <strong>↺</strong> de la barre latérale gauche (mode Récupération) rafraîchit la liste des clés USB — c'est distinct des <strong>↺</strong> des documents en Archive.</em>" },
+      { q:"L'application détecte-t-elle automatiquement les modifications manuelles dans l'archive ?", a:"Oui — <kbd>F5</kbd> relit intégralement le dossier de sauvegarde. Les changements suivants sont détectés :<br/><br/>• <strong>Ajout d'un labo</strong> : créez un dossier <code>Labo-NN</code> dans la séance → visible après <kbd>F5</kbd>.<br/>• <strong>Ajout d'une séance</strong> : créez un dossier <code>Séance-NN</code> → visible après <kbd>F5</kbd>.<br/>• <strong>Renommage</strong> : tout dossier au format <code>Séance-NN</code> / <code>Labo-NN</code> est reconnu automatiquement.<br/>• <strong>Ajout / suppression de candidat</strong> : le dossier <code>NNNNNN</code> est inclus ou exclu au prochain <kbd>F5</kbd>.<br/><br/>Dans tous les cas, régénérez les documents via les boutons <strong>↺</strong> en mode Archive pour refléter les changements." },
+    ]
+  },
+  {
+    cat: "Clé USB &amp; Détection",
+    items: [
+      { q:"La clé contient des sous-dossiers — comment choisir le bon ?", a:"Après avoir sélectionné la clé, les sous-dossiers détectés apparaissent dans la barre latérale gauche avec le nombre de candidats de chacun. Cliquez sur le sous-dossier correspondant à votre séance pour lancer le scan.<br/><br/><div style='margin:12px 0;border-radius:8px;overflow:hidden;box-shadow:0 4px 16px rgba(26,58,92,.12);border:1px solid #D0DCE8;font-family:sans-serif;font-size:11px;max-width:220px'><div style='background:#94A3B8;color:white;font-size:9px;font-weight:700;letter-spacing:.8px;padding:5px 12px;text-transform:uppercase'>CLÉ USB <span style='float:right;cursor:pointer;opacity:.7'>↺</span></div><div style='background:#E8F0F8;border:1px solid #B8D0E8;border-radius:5px;margin:8px 8px 4px;padding:7px 9px;display:flex;align-items:center;justify-content:space-between'><span style='font-weight:700;font-size:11px;color:#1A3A5C'>💾 F: — LABO-2</span><span style='font-size:11px;opacity:.5;border:1px solid rgba(26,58,92,.2);border-radius:3px;padding:1px 3px'>📁</span></div><div style='font-size:9px;color:#64748B;padding:2px 12px 6px;font-family:monospace'>F:\ &nbsp; 14.0 Go / 14.6 Go</div><div style='background:#EEF3F8;font-size:9px;font-weight:700;color:#F59E0B;padding:6px 12px 3px;display:flex;align-items:center;gap:5px'>📁 Dossier source :</div><div style='margin:3px 8px 2px;background:#1A3A5C;color:white;border-radius:5px;padding:6px 10px;display:flex;align-items:center;justify-content:space-between'><span style='font-size:11px;font-weight:700'>🗂 Racine de la clé</span><span style='background:#2980B9;color:white;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px'>13</span></div><div style='margin:2px 8px 0;padding:5px 10px;display:flex;align-items:center;gap:8px'><span style='color:#F59E0B;font-size:10px'>▸</span><span style='font-size:11px;color:#334155'>📁 S1</span><span style='margin-left:auto;background:#EBF3FA;color:#2980B9;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px'>3</span></div><div style='margin:2px 8px 8px;padding:5px 10px;display:flex;align-items:center;gap:8px'><span style='color:#F59E0B;font-size:10px'>▸</span><span style='font-size:11px;color:#334155'>📁 Séance2</span><span style='margin-left:auto;background:#EBF3FA;color:#2980B9;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px'>6</span></div></div><br/>Dans cet exemple, <strong>Racine de la clé</strong> contient 13 candidats, <strong>S1</strong> en contient 3, et <strong>Séance2</strong> en contient 6." },
+    ]
+  },
+  {
+    cat: "Documents (Rapport &amp; Grille)",
+    items: [
+      { q:"Où sont enregistrés le rapport et la grille ?", a:"Dans le dossier du labo correspondant dans votre archive. Exemple :<br/><code>D:\\Bac2026_j1\\Séance-01\\Labo-02\\Rapport__Seance-01_Labo-02__2026-05-16.pdf</code><br/><code>D:\\Bac2026_j1\\Séance-01\\Labo-02\\GrilleEval_Seance-01_Labo-02__2026-05-16.xlsx</code>" },
+      { q:"Comment modifier le nombre de questions dans la grille ?", a:"Allez dans <strong>⚙ Paramètres</strong>, modifiez <strong>Colonnes grille</strong> (entre 5 et 30), enregistrez, puis cliquez sur <strong>↺</strong> à côté de Grille Excel en mode Archive pour régénérer." },
+      { q:"Le nom du lycée n'apparaît pas dans le rapport", a:"Vérifiez que le champ <strong>Lycée / Centre</strong> est renseigné dans <strong>⚙ Paramètres</strong>. Régénérez ensuite le rapport via <strong>↺</strong> en mode Archive." },
+    ]
+  },
+  {
+    cat: "Paramètres &amp; Configuration",
+    items: [
+      { q:"Où sont stockés les paramètres de l'application ?", a:"Dans le fichier :<br/><code>C:&#92;Users&#92;&lt;NomUtilisateur&gt;&#92;AppData&#92;Roaming&#92;BacArchive&#92;settings.ini</code><br/>Il est recommandé de les modifier via <strong>⚙ Paramètres</strong> dans l'application." },
+      { q:"Comment changer le dossier de sauvegarde en cours de journée ?", a:"Ouvrez <strong>⚙ Paramètres</strong>, cliquez sur <strong>📁 Parcourir</strong>, sélectionnez le nouveau dossier et enregistrez.<br/><strong>Important :</strong> les copies déjà effectuées dans l'ancien dossier ne sont pas migrées. Le mode Archive affichera uniquement le contenu du nouveau dossier." },
+      { q:"Comment ajuster la taille du texte de l'application ?", a:"Utilisez <kbd>Ctrl</kbd>+<kbd>Molette</kbd>, <kbd>Ctrl</kbd>+<kbd>+</kbd> ou <kbd>Ctrl</kbd>+<kbd>-</kbd>. <kbd>Ctrl</kbd>+<kbd>0</kbd> remet à 100 %. Le zoom revient à 100 % à chaque démarrage." },
+    ]
+  },
+  {
+    cat: "Navigation",
+    items: [
+      { q:"Comment accéder aux séances déjà copiées ?", a:"Cliquez sur l'onglet <strong>📂 Archive</strong> ou utilisez <kbd>Ctrl</kbd>+<kbd>2</kbd>. Cliquez sur une séance pour la déplier et accéder à ses labos." },
+    ]
+  },
+];
+
+// Render
+const faqList = document.getElementById('faq-list');
+faqs.forEach(cat => {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'margin-bottom:24px';
+
+  let hdr = `<div class="sub-title">${cat.cat}</div>`;
+  if (cat.desc) hdr += `<p style="font-size:.82rem;color:var(--gray-500);margin:-6px 0 10px">${cat.desc}</p>`;
+  wrap.innerHTML = hdr;
+
+  cat.items.forEach(item => {
+    const d = document.createElement('details');
+    d.style.cssText = 'background:white;border:1px solid var(--gray-300);border-radius:8px;padding:12px 16px;margin-bottom:8px';
+    d.innerHTML = `
+      <summary style="font-weight:600;color:var(--navy);font-size:.88rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <span>${item.q}</span>
+        <span style="color:var(--blue);font-size:1rem;flex-shrink:0">+</span>
+      </summary>
+      <div style="margin-top:10px;font-size:.85rem;color:#475569;line-height:1.75">${item.a}</div>`;
+    d.addEventListener('toggle', () => {
+      const s = d.querySelector('summary span:last-child');
+      if (s) s.textContent = d.open ? '−' : '+';
+    });
+    wrap.appendChild(d);
+  });
+  faqList.appendChild(wrap);
+});
+
+// ── Scroll top ────────────────────────────────────────────────────────────────
+const btn = document.getElementById('scroll-top');
+window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 300));
+
+// ── Active nav ────────────────────────────────────────────────────────────────
+const anchors  = document.querySelectorAll('.section-anchor');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.parentElement.id;
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#'+id));
+    }
+  });
+}, { rootMargin: '-60px 0px -70% 0px' });
+anchors.forEach(a => obs.observe(a));
+
+// ── Zoom ──────────────────────────────────────────────────────────────────────
+(function() {
+  let zoom = 1.0;
+  const MIN = 0.7, MAX = 1.5, STEP = 0.1;
+  const apply = () => { document.documentElement.style.zoom = zoom.toFixed(2); };
+  window.addEventListener('wheel', e => {
+    if (!e.ctrlKey) return;
+    e.preventDefault();
+    zoom = Math.max(MIN, Math.min(MAX, Math.round((zoom + (e.deltaY < 0 ? STEP : -STEP)) * 10) / 10));
+    apply();
+  }, { passive: false });
+  window.addEventListener('keydown', e => {
+    if (!e.ctrlKey) return;
+    if (e.key === '+' || e.key === '=' || e.key === 'Add')    { e.preventDefault(); zoom = Math.min(MAX, Math.round((zoom+STEP)*10)/10); apply(); }
+    if (e.key === '-' || e.key === 'Subtract')                { e.preventDefault(); zoom = Math.max(MIN, Math.round((zoom-STEP)*10)/10); apply(); }
+    if (e.key === '0')                                        { e.preventDefault(); zoom = 1.0; apply(); }
+  });
+})();
+
+// ── Recherche topbar (Ctrl+F) ────────────────────────────────────────────────
+(function() {
+  const input  = document.getElementById('tb-srch');
+  const count  = document.getElementById('tb-count');
+  const btnPrv = document.getElementById('tb-prev');
+  const btnNxt = document.getElementById('tb-next');
+  const SKIP   = new Set(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','INPUT','SELECT','BUTTON']);
+  let matches = [], cur = -1;
+
+  function clearHL() {
+    document.querySelectorAll('mark.search-match').forEach(el => {
+      el.replaceWith(document.createTextNode(el.textContent));
+    });
+    try { document.querySelector('.content').normalize(); } catch {}
+    matches = []; cur = -1;
+    count.textContent = ''; count.classList.remove('show');
+    btnPrv.classList.remove('show'); btnNxt.classList.remove('show');
+  }
+  function textNodes(root) {
+    const res = [], w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        let p = n.parentElement;
+        while (p) { if (SKIP.has(p.tagName)) return NodeFilter.FILTER_REJECT; p = p.parentElement; }
+        return n.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+      }
+    });
+    let n; while ((n = w.nextNode())) res.push(n);
+    return res;
+  }
+  function esc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+  function highlight(q) {
+    clearHL();
+    if (q.length < 2) return;
+    const re = new RegExp(esc(q), 'gi'), found = [];
+    textNodes(document.querySelector('.content')).forEach(node => {
+      if (!node.textContent.toLowerCase().includes(q.toLowerCase())) return;
+      const frag = document.createDocumentFragment();
+      let last = 0, m; re.lastIndex = 0;
+      while ((m = re.exec(node.textContent)) !== null) {
+        if (m.index > last) frag.appendChild(document.createTextNode(node.textContent.slice(last, m.index)));
+        const mark = document.createElement('mark');
+        mark.className = 'search-match'; mark.textContent = m[0];
+        frag.appendChild(mark); found.push(mark); last = re.lastIndex;
+      }
+      if (last < node.textContent.length) frag.appendChild(document.createTextNode(node.textContent.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+    matches = found;
+    count.textContent = matches.length ? `1 / ${matches.length}` : 'Aucun résultat';
+    count.style.color = matches.length ? 'var(--blue)' : '#dc2626';
+    count.classList.add('show');
+    if (matches.length) { btnPrv.classList.add('show'); btnNxt.classList.add('show'); goTo(0); }
+  }
+  function goTo(i) {
+    if (!matches.length) return;
+    if (cur >= 0 && matches[cur]) matches[cur].classList.remove('current');
+    cur = ((i % matches.length) + matches.length) % matches.length;
+    const el = matches[cur];
+    el.classList.add('current');
+    let p = el.parentElement;
+    while (p) {
+      if (p.tagName === 'DETAILS' && !p.open) {
+        p.open = true;
+        const s = p.querySelector('summary span:last-child');
+        if (s && (s.textContent === '+' || s.textContent === '−')) s.textContent = '−';
+      }
+      p = p.parentElement;
+    }
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    count.textContent = `${cur + 1} / ${matches.length}`;
+  }
+  let deb;
+  input.addEventListener('input', () => { clearTimeout(deb); deb = setTimeout(() => highlight(input.value.trim()), 220); });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter')  { e.preventDefault(); e.shiftKey ? goTo(cur-1) : goTo(cur+1); }
+    if (e.key === 'Escape') { input.value = ''; clearHL(); input.blur(); }
+  });
+  btnNxt.addEventListener('click', () => goTo(cur+1));
+  btnPrv.addEventListener('click', () => goTo(cur-1));
+  window.addEventListener('keydown', e => {
+    if ((e.ctrlKey||e.metaKey) && e.key === 'f') { e.preventDefault(); input.focus(); input.select(); }
+  });
+})();
+
+// ── Lightbox — fit écran (1er clic) · pleine taille scrollable (2e clic) ─────
+(function() {
+  const lb     = document.getElementById('lightbox');
+  const lbImg  = document.getElementById('lightbox-img');
+  const lbCls  = document.getElementById('lightbox-close');
+  const lbHint = document.getElementById('lightbox-hint');
+  function openLb(src, alt) {
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.remove('scroll-mode'); lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    lbHint.textContent = "Clic sur l'image pour agrandir · Fond ou Échap pour fermer";
+  }
+  function enterScroll() {
+    lb.classList.add('scroll-mode'); lb.scrollTop = 0;
+    lbHint.textContent = "Défilez pour voir toute l'image · Clic image ou Échap pour fermer";
+  }
+  function closeLb() {
+    lb.classList.remove('open','scroll-mode');
+    document.body.style.overflow = '';
+    setTimeout(() => { lbImg.src = ''; }, 200);
+  }
+  document.querySelectorAll('img.zoomable').forEach(img => {
+    img.addEventListener('click', () => openLb(img.src, img.alt));
+  });
+  lbImg.addEventListener('click', e => {
+    e.stopPropagation();
+    lb.classList.contains('scroll-mode') ? closeLb() : enterScroll();
+  });
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  lbCls.addEventListener('click', closeLb);
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lb.classList.contains('open')) closeLb();
+  });
+})();
+
+</script>
+</body>
+</html>
