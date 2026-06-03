@@ -76,22 +76,66 @@
       </div>
     </div>
 
-    <!-- Séance / Labo -->
+    <!-- Séance / Labo : sélection en 3 étapes -->
     <div class="card">
       <div class="card-hdr"><span>Séance / Labo</span></div>
-      <div class="field-row">
-        <label>Séance</label>
-        <select :value="settings.seance" @change="handleSeanceChange(parseInt($event.target.value))">
-          <option v-for="n in SEANCES" :key="n" :value="n">Séance-{{ n }}</option>
-        </select>
-      </div>
-      <div class="field-row">
-        <label>Labo</label>
-        <select :value="settings.labo" @change="handleLaboChange(parseInt($event.target.value))">
-          <option v-for="n in LABOS" :key="n" :value="n">Labo-{{ n }}</option>
-        </select>
-      </div>
-      <div v-if="currentDestPath" class="dest-preview">→ {{ currentDestPath }}</div>
+
+      <p v-if="examLoading" class="hint">⏳ Chargement configuration…</p>
+      <p v-else-if="jours.length === 0" class="hint">
+        Aucune journée configurée.<br>
+        <small>Configurer dans ⚙ Paramètres → Examens</small>
+      </p>
+
+      <template v-else>
+        <!-- Étape 1 : Journée -->
+        <div class="rec-step">
+          <div class="rec-step-hdr">
+            <span class="rec-step-badge">1</span> Journée
+          </div>
+          <div class="rec-step-list">
+            <button v-for="(jour, jIdx) in jours" :key="jIdx"
+              :class="'rec-step-item' + (selectedJourIdx === jIdx ? ' active' : '')"
+              @click="selectJour(jIdx)">
+              <span class="rec-step-num">J{{ jIdx + 1 }}</span>
+              <span class="rec-step-meta">{{ formatJourDate(jour) }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Étape 2 : Séance -->
+        <div v-if="selectedJourIdx !== null" class="rec-step">
+          <div class="rec-step-hdr">
+            <span class="rec-step-badge">2</span> Séance
+          </div>
+          <div class="rec-step-list">
+            <button v-for="(se, sIdx) in currentSeances" :key="sIdx"
+              :class="'rec-step-item' + (selectedSeanceIdx === sIdx ? ' active' : '')"
+              @click="selectSeance(sIdx)">
+              <span class="rec-step-num">S{{ sIdx + 1 }}</span>
+              <span class="rec-step-meta">{{ se.date_deb }} · {{ se.duree }}min</span>
+            </button>
+            <p v-if="currentSeances.length === 0" class="hint" style="padding:6px 4px;font-size:11px">
+              Aucune séance configurée pour ce jour.
+            </p>
+          </div>
+        </div>
+
+        <!-- Étape 3 : Labo -->
+        <div v-if="selectedSeanceIdx !== null" class="rec-step">
+          <div class="rec-step-hdr">
+            <span class="rec-step-badge">3</span> Labo
+          </div>
+          <div class="rec-step-list rec-step-list-grid">
+            <button v-for="laboNum in laboRange" :key="laboNum"
+              :class="'rec-step-item rec-step-labo' + (settings.labo === laboNum ? ' active' : '')"
+              @click="selectLabo(laboNum)">
+              L{{ String(laboNum).padStart(2, '0') }}
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <div v-if="currentDestPath" class="dest-preview" style="margin-top:8px">→ {{ currentDestPath }}</div>
       <div v-else class="dest-missing">⚠ Configurez un dossier dans ⚙ Paramètres</div>
     </div>
 
@@ -225,6 +269,7 @@ import {
   generateExcel as apiGenerateExcel,
   scanArchive as apiScanArchive,
   updateBacLabo as apiUpdateBacLabo,
+  loadExamConfig as apiLoadExamConfig,
 } from '../api.js'
 
 const props = defineProps({
@@ -243,6 +288,64 @@ const copying = ref(false)
 const progress = ref(null)
 const error = ref('')
 const genBusy = ref(false)
+
+// ── Configuration des examens (sélection 3 étapes) ──
+const examConfig = ref({ nbre_jours: 0, jours: [] })
+const examLoading = ref(false)
+const selectedJourIdx = ref(null)
+const selectedSeanceIdx = ref(null)
+const laboRange = Array.from({ length: 10 }, (_, i) => i + 1)
+
+const loadExamConfigData = async () => {
+  examLoading.value = true
+  try {
+    const r = await apiLoadExamConfig()
+    if (r?.success && r.data) {
+      examConfig.value = { nbre_jours: r.data.nbre_jours || 0, jours: r.data.jours || [] }
+    }
+  } catch (e) {
+    console.error('Erreur chargement config examens:', e)
+  } finally {
+    examLoading.value = false
+  }
+}
+
+const jours = computed(() => examConfig.value.jours || [])
+
+const currentSeances = computed(() => {
+  if (selectedJourIdx.value === null) return []
+  const jour = jours.value[selectedJourIdx.value]
+  if (!jour || !jour.examens || jour.examens.length === 0) return []
+  const all = []
+  for (const exam of jour.examens) {
+    if (exam.seances) all.push(...exam.seances)
+  }
+  return all
+})
+
+const formatJourDate = (jour) => {
+  if (!jour || !jour.examens || jour.examens.length === 0) return '—'
+  const date = jour.examens[0].date
+  if (!date) return '—'
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(date)
+  if (!m) return '—'
+  return `${m[3]}/${m[2]}${m[1] ? '/' + m[1].slice(2) : ''}`
+}
+
+const selectJour = (idx) => {
+  selectedJourIdx.value = idx
+  selectedSeanceIdx.value = null
+}
+
+const selectSeance = (idx) => {
+  selectedSeanceIdx.value = idx
+  // Synchroniser avec settings.seance
+  props.saveSetting({ seance: idx + 1 })
+}
+
+const selectLabo = (num) => {
+  handleLaboChange(num)
+}
 
 const currentDestPath = computed(() =>
   props.settings.destBase
@@ -443,4 +546,103 @@ const reset = () => {
   error.value = ''
   progress.value = null
 }
+
+onMounted(() => {
+  loadExamConfigData()
+})
 </script>
+
+<style scoped>
+.rec-step {
+  margin-bottom: 8px;
+  border: 1px solid #dde3ea;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.rec-step-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: #f0f4fa;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1a3a5c;
+  border-bottom: 1px solid #dde3ea;
+}
+
+.rec-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1a3a5c;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.rec-step-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.rec-step-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3px;
+  padding: 5px;
+}
+
+.rec-step-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #f0f4fa;
+  text-align: left;
+  cursor: pointer;
+  font-size: 11px;
+  color: #1a3a5c;
+  transition: background 0.15s;
+  width: 100%;
+}
+
+.rec-step-item:hover:not(.active) {
+  background: #f0f4fa;
+}
+
+.rec-step-item.active {
+  background: #1a3a5c;
+  color: #fff;
+  font-weight: 600;
+}
+
+.rec-step-labo {
+  justify-content: center;
+  border: 1px solid #dde3ea;
+  border-radius: 3px;
+  padding: 6px 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.rec-step-labo.active {
+  border-color: #1a3a5c;
+}
+
+.rec-step-num {
+  font-weight: 700;
+  min-width: 20px;
+}
+
+.rec-step-meta {
+  font-size: 10px;
+  opacity: 0.85;
+}
+</style>

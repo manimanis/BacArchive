@@ -17,19 +17,15 @@
       </div>
       <div class="hdr-r">
         <button class="btn-daily" @click="handleDailyReport" title="Rapport journalier">📋 Rapport jour</button>
-        <button class="btn-cfg" @click="showExamConfig = true" title="Éditer la configuration des examens">📅 Examens</button>
-        <button class="btn-cfg" @click="showParams = true">⚙ Paramètres</button>
+        <button class="btn-cfg" @click="openSettings()">⚙ Paramètres</button>
       </div>
     </header>
 
-    <!-- Modal Params -->
-    <ModalParams v-if="showParams" :settings="settings"
-      @save="async (s) => { await saveSetting(s); showParams = false }"
-      @close="showParams = false" />
-
-    <!-- Modal ExamConfig -->
-    <ModalExamConfig v-if="showExamConfig" :annee="settings.annee"
-      @close="showExamConfig = false" @saved="onExamConfigSaved" />
+    <!-- Modal Paramètres + Configuration des examens (unifié) -->
+    <ModalSettings v-if="showSettings" :settings="settings" :initial-tab="settingsTab"
+      @save="async (s) => { await saveSetting(s); showSettings = false }"
+      @close="showSettings = false"
+      @exam-saved="onExamConfigSaved" />
 
     <!-- Body -->
     <div class="body">
@@ -70,7 +66,7 @@
       <span class="dest-bar-label">Dossier de sauvegarde :</span>
       <span class="dest-bar-text">{{ settings.destBase }}</span>
     </div>
-    <div v-else class="dest-bar dest-bar-warn" @click="showParams = true">
+    <div v-else class="dest-bar dest-bar-warn" @click="openSettings()">
       <span>⚠</span>
       <span class="dest-bar-text">Aucun dossier de sauvegarde — cliquer pour configurer</span>
     </div>
@@ -86,8 +82,7 @@ import { loadSettings as apiLoadSettings, saveSettings as apiSaveSettings, listD
 import { showToast } from './composables/useToast.js'
 import ModeRecup from './components/ModeRecup.vue'
 import ModeArchive from './components/ModeArchive.vue'
-import ModalParams from './components/ModalParams.vue'
-import ModalExamConfig from './components/ModalExamConfig.vue'
+import ModalSettings from './components/ModalSettings.vue'
 import ToastManager from './components/ToastManager.vue'
 
 const MATIERE_SHORT = { 'STI': 'STI', 'AlgoProg': 'Algo & Prog', 'Info': 'Informatique' }
@@ -101,8 +96,8 @@ const settings = ref({
   seance: 1, labo: 1, destBase: '', nbQuestions: 15,
 })
 const mode = ref('recup')
-const showParams = ref(false)
-const showExamConfig = ref(false)
+const showSettings = ref(false)
+const settingsTab = ref('global')
 const drives = ref([])
 const appReady = ref(false)
 const toastManager = ref(null)
@@ -132,7 +127,8 @@ onMounted(async () => {
     }
   } catch (e) { console.error('Failed to load settings:', e) }
   appReady.value = true
-  showParams.value = true
+  showSettings.value = true
+  settingsTab.value = 'global'
   await refreshDrives()
   // refreshInterval = setInterval(refreshDrives, 3000)
 })
@@ -175,6 +171,11 @@ const handleDailyReport = async () => {
   }
 }
 
+const openSettings = () => {
+  settingsTab.value = 'global'
+  showSettings.value = true
+}
+
 const saveSetting = async (updates) => {
   const next = { ...settings.value, ...updates }
   settings.value = next
@@ -195,7 +196,6 @@ const updateArchiveState = (u) => { archiveState.value = { ...archiveState.value
 
 const onExamConfigSaved = (data) => {
   // La configuration des examens a été enregistrée avec succès.
-  // On garde le modal ouvert pour permettre des corrections rapides.
   console.log('Configuration des examens enregistrée :', data)
 }
 </script>
